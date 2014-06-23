@@ -463,6 +463,7 @@ function initialState(event, key, keyCode) {
             if (cursor.size.equals(Point2.one)) {
                 cursor.position.become(Point2.zero);
             } else {
+                cursor.position.addThis(innerCursor.position);
                 cursor.size.become(Point2.one);
                 innerCursor.position.become(Point2.zero);
                 innerCursor.size.become(Point2.one);
