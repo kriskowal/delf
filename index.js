@@ -3,7 +3,6 @@ require("collections/shim-array");
 var FastMap = require("collections/fast-map");
 var FastSet = require("collections/fast-set");
 var Point2 = require("./point2");
-var Point3 = require("./point3");
 var Region2 = require("./region2");
 
 function Tile(point) {
@@ -14,7 +13,7 @@ function Tile(point) {
 
 function TileView() {
     this.point = new Point2(); // map position
-    this.pointPx = new Point3(); // 3d position in view in px
+    this.pointPx = new Point2(); // 3d position in view in px
     this.tile = null; // model
     this.element = document.createElement("div");
     this.element.className = "tile";
@@ -28,12 +27,9 @@ TileView.prototype.reset = function () {
 TileView.prototype.draw = function () {
     var tile = this.tile;
     this.pointPx.become(this.point).mulThis(tileLength);
-    this.pointPx.z = this.tile.space ? -40 : 0;
-    var tileTransform = transform3(this.pointPx);
-    this.element.style.webkitTransform = tileTransform;
-    this.element.style.transform = tileTransform;
+    this.element.style.left = this.pointPx.x + "px";
+    this.element.style.top = this.pointPx.y + "px";
     this.element.className = "tile" + (this.tile.space ? " space" : "");
-    this.element.style.zIndex = this.tile.space ? -1 : 0;
 };
 
 var tileLength = 50;
@@ -52,7 +48,7 @@ var cursor = new Region2(new Point2(0, 0), new Point2(1, 1));
 var innerCursor = new Region2(new Point2(0, 0), new Point2(1, 1));
 var frustum = new Region2(new Point2(), new Point2());
 var windowSize = new Point2();
-var marginLength = 10;
+var marginLength = 30;
 var margin = new Point2(marginLength, marginLength);
 var offset = new Point2();
 offset.become(Point2.zero).subThis(margin).divThis(2);
@@ -169,27 +165,29 @@ function resize() {
 function draw() {
 
     cursorPx.become(cursor).mulThis(tileLength);
-    var cursorTransform = transform2(cursorPx.position);
-    cursorElement.style.transform = cursorTransform;
-    cursorElement.style.webkitTransform = cursorTransform;
+    cursorElement.style.left = cursorPx.position.x + "px";
+    cursorElement.style.top = cursorPx.position.y + "px";
 
     originPx.x = 0;
     originPx.y = 0;
     originPx.subThis(cursorPx.position).subThis(halfTileSize);
-    var originTransform = transform2(originPx);
-    originElement.style.transform = originTransform;
-    originElement.style.webkitTransform = originTransform;
+    originElement.style.left = originPx.x + "px";
+    originElement.style.top = originPx.y + "px";
 
+    requestRestFrustum();
+}
+
+function requestRestFrustum() {
+    if (resetFrustumHandle) {
+        clearTimeout(resetFrustumHandle);
+    }
+    resetFrustumHandle = setTimeout(resetFrustumThunk, 1000);
+}
+function resetFrustumThunk() {
+    resetFrustumHandle = null;
     resetFrustum();
 }
-
-function transform2(pointPx) {
-    return "translateX(" + pointPx.x + "px) translateY(" + pointPx.y + "px)";
-}
-
-function transform3(pointPx) {
-    return "translateX(" + pointPx.x + "px) translateY(" + pointPx.y + "px) translateZ(" + pointPx.z  + "px)";
-}
+var resetFrustumHandle = null;
 
 resize();
 window.addEventListener("resize", resize);

@@ -9,20 +9,26 @@ body {
 /* center of page frame of reference, governed by window size */
 .center {
     position: absolute;
+    /*
     perspective: 1000px;
     backface-visibility: hidden;
     transform-style: preserve-3d;
     -webkit-backface-visibility: hidden;
     -webkit-perspective: 500px;
     -webkit-transform-style: preserve-3d;
+    */
 }
 
 /* map frame of reference, relative to center, 1s animated transitions */
 .origin {
     position: absolute;
+    transition: top 1000ms, left 1000ms;
+    -webkit-transition: top 1000ms, left 1000ms;
+    /*
     -webkit-transition: -webkit-transform 100ms;
     transition: transform 100ms;
     transform-style: preserve-3d;
+    */
 }
 
 /* user frame of reference, asymptotically approaches window center, 100ms
@@ -32,8 +38,12 @@ body {
     height: 50px;
     width: 50px;
     outline: dashed white 1px;
+    transition: top 100ms, left 100ms;
+    -webkit-transition: top 100ms, left 100ms;
+    /*
     transition: transform 100ms;
     -webkit-transition: -webkit-transform 100ms;
+    */
 }
 
 .innerCursor {
