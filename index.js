@@ -460,10 +460,13 @@ function initialState(event, key, keyCode) {
             innerCursor.position.become(Point2.zero);
             draw();
         } else if (key === "0") { // origin
-            cursor.position.become(Point2.zero);
-            cursor.size.become(Point2.one);
-            innerCursor.position.become(Point2.zero);
-            innerCursor.size.become(Point2.one);
+            if (cursor.size.equals(Point2.one)) {
+                cursor.position.become(Point2.zero);
+            } else {
+                cursor.size.become(Point2.one);
+                innerCursor.position.become(Point2.zero);
+                innerCursor.size.become(Point2.one);
+            }
             draw();
         } else if (key === ")") {
             // set origin, full map transform
