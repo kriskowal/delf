@@ -459,15 +459,14 @@ function initialState(event, key, keyCode) {
             innerCursor.size.become(cursor.size);
             innerCursor.position.become(Point2.zero);
             draw();
-        } else if (key === "0") { // origin
-            if (cursor.size.equals(Point2.one)) {
-                cursor.position.become(Point2.zero);
-            } else {
-                cursor.position.addThis(innerCursor.position);
-                cursor.size.become(Point2.one);
-                innerCursor.position.become(Point2.zero);
-                innerCursor.size.become(Point2.one);
-            }
+        } else if (key === "g") { // origin
+            cursor.position.become(Point2.zero);
+            draw();
+        } else if (key === "0") { // reset
+            cursor.position.addThis(innerCursor.position);
+            cursor.size.become(Point2.one);
+            innerCursor.position.become(Point2.zero);
+            innerCursor.size.become(Point2.one);
             draw();
         } else if (key === ")") {
             // set origin, full map transform
