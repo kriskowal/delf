@@ -6,6 +6,8 @@
   "main": "index.js",
   "author": "Kris Kowal",
   "dependencies": {
-    "collections": "^2.0.1"
+    "collections": "^2.0.1",
+    "setimmediate": "^1.0.2",
+    "mr": "^2.0.3"
   }
 }
