@@ -8,6 +8,7 @@ function Point2(x, y) {
 }
 
 Point2.zero = new Point2();
+Point2.one = new Point2(1, 1);
 
 Point2.prototype = Object.create(Point.prototype);
 Point2.prototype.constructor = Point2;

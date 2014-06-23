@@ -12,6 +12,7 @@ Point3.prototype = Object.create(Point.prototype);
 Point3.prototype.constructor = Point3;
 
 Point3.zero = new Point3();
+Point3.one = new Point3(1, 1, 1);
 
 Point3.prototype.addThis = function (that) {
     this.x = this.x + that.x;
