@@ -525,8 +525,6 @@ function enterTransientInnerCursorMode(returnMode) {
     }
 
     function exit() {
-        innerCursor.position.become(Point2.zero);
-        innerCursor.size.become(cursor.size);
         innerCursorMode = false;
         draw();
         return returnMode;
