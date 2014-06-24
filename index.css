@@ -37,8 +37,8 @@ body {
  * animated transitions, so the origin moves to catch up */
 .cursor {
     position: absolute;
-    height: 50px;
-    width: 50px;
+    height: 24px;
+    width: 24px;
     outline: dashed white 1px;
     transition: top 100ms, left 100ms, width 100ms, height 100ms;
     -webkit-transition: top 100ms, left 100ms, width 100ms, height 100ms;
@@ -51,10 +51,8 @@ body {
 .innerCursor {
     position: absolute;
     border: dashed white 1px;
-    margin: 9px;
-    height: 30px;
-    width: 30px;
-    border-radius: 24px;
+    margin: 5px;
+    border-radius: 10px;
     transition: top 100ms, left 100ms, width 100ms, height 100ms, opacity 500ms;
     -webkit-transition: top 100ms, left 100ms, width 100ms, height 100ms, opacity 500ms;
 }
@@ -63,8 +61,8 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    width: 50px;
-    height: 50px;
+    width: 24px;
+    height: 24px;
     background-color: #221111;
 }
 
@@ -102,11 +100,11 @@ body {
 
 .help {
     position: absolute;
-    color: white;
+    color: #abb;
     font-size: 20px;
     padding: 10px;
     background-color: #334455;
-    height: 1.5em;
+    height: 3em;
     left: 0;
     right: 0;
     bottom: 0;

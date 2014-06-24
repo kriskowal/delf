@@ -17,9 +17,9 @@ Region.prototype.mulThis = function (n) {
     return this;
 };
 
-Region.prototype.divThis = function (n) {
-    this.position.divThis(n);
-    this.size.divThis(n);
+Region.prototype.scaleThis = function (n) {
+    this.position.scaleThis(n);
+    this.size.scaleThis(n);
     return this;
 };
 

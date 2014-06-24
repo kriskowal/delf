@@ -17,11 +17,13 @@ TileView.prototype.reset = function () {
 
 TileView.prototype.draw = function () {
     var tile = this.tile;
-    this.pointPx.become(this.point).mulThis(this.constructor.size);
+    this.pointPx.become(this.point).scaleThis(this.constructor.size);
     this.element.style.left = this.pointPx.x + "px";
     this.element.style.top = this.pointPx.y + "px";
+    if (this.tile.space) {
+    }
     this.element.className = "tile" + (this.tile.space ? " space" : "");
 };
 
-TileView.size = 50;
+TileView.size = 24;
 

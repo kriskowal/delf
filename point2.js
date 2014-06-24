@@ -13,18 +13,10 @@ Point2.one = new Point2(1, 1);
 Point2.prototype = Object.create(Point.prototype);
 Point2.prototype.constructor = Point2;
 
-Point2.prototype.add = function (that) {
-    return this.clone().addThis(that);
-};
-
 Point2.prototype.addThis = function (that) {
     this.x = this.x + that.x;
     this.y = this.y + that.y;
     return this;
-};
-
-Point2.prototype.sub = function (that) {
-    return this.clone().addThis(that);
 };
 
 Point2.prototype.subThis = function (that) {
@@ -33,23 +25,33 @@ Point2.prototype.subThis = function (that) {
     return this;
 };
 
-Point2.prototype.mul = function (n) {
-    return this.clone().mulThis(n);
+Point2.prototype.mulThis = function (that) {
+    this.x = this.x * that.x;
+    this.y = this.y * that.y;
+    return this;
 };
 
-Point2.prototype.mulThis = function (n) {
+Point2.prototype.scaleThis = function (n) {
     this.x = this.x * n;
     this.y = this.y * n;
     return this;
 };
 
-Point2.prototype.div = function (n) {
-    return this.clone().divThis(n);
+Point2.prototype.roundThis = function () {
+    this.x = Math.round(this.x);
+    this.y = Math.round(this.y);
+    return this;
 };
 
-Point2.prototype.divThis = function (n) {
-    this.x = this.x / n | 0;
-    this.y = this.y / n | 0;
+Point2.prototype.floorThis = function () {
+    this.x = Math.floor(this.x);
+    this.y = Math.floor(this.y);
+    return this;
+};
+
+Point2.prototype.ceilThis = function () {
+    this.x = Math.ceil(this.x);
+    this.y = Math.ceil(this.y);
     return this;
 };
 

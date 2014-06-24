@@ -28,17 +28,17 @@ Point3.prototype.subThis = function (that) {
     return this;
 };
 
-Point3.prototype.mulThis = function (n) {
-    this.x = this.x * n;
-    this.y = this.y * n;
-    this.z = this.z * n;
+Point3.prototype.mulThis = function (that) {
+    this.x = this.x * that.x;
+    this.y = this.y * that.y;
+    this.z = this.z * that.z;
     return this;
 };
 
-Point3.prototype.divThis = function (n) {
-    this.x = this.x / n | 0;
-    this.y = this.y / n | 0;
-    this.z = this.z / n | 0;
+Point3.prototype.scaleThis = function (n) {
+    this.x = this.x * n;
+    this.y = this.y * n;
+    this.z = this.z * n;
     return this;
 };
 
