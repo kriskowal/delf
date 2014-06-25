@@ -55,6 +55,17 @@ Point2.prototype.ceilThis = function () {
     return this;
 };
 
+Point2.prototype.transpose = function () {
+    return this.clone().transposeThis();
+};
+
+Point2.prototype.transposeThis = function () {
+    var temp = this.x;
+    this.x = this.y;
+    this.y = temp;
+    return this;
+};
+
 Point2.prototype.clone = function () {
     return new Point2(this.x, this.y);
 };

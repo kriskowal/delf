@@ -18,3 +18,11 @@ Region2.prototype.contains = function (that) {
     );
 };
 
+// TODO
+Region2.prototype.annexThis = function (that) {
+};
+
+Region2.prototype.clone = function () {
+    return new Region2(this.position.clone(), this.size.clone());
+};
+
