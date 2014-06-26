@@ -7,9 +7,9 @@ var Region2 = require("./region2");
 var TileView = require("./tile-view");
 var Tile = require("./tile");
 
-var tileViews = new FastMap();
-var freeTiles = [];
-var map = new FastMap(); // point to state
+var tileViews = new FastMap(); // point to tile view
+var freeTileViews = [];
+var map = new FastMap(); // point to tile model
 map.getDefault = function (point) {
     var tile = new Tile(point);
     this.set(point.clone(), tile);
@@ -18,11 +18,13 @@ map.getDefault = function (point) {
 
 var viewport = new Region2(new Point2(0, 0), new Point2());
 var cursor = new Region2(new Point2(0, 0), new Point2(1, 1));
-var innerCursor = new Region2(new Point2(0, 0), new Point2(1, 1));
+var knob = new Region2(new Point2(0, 0), new Point2(1, 1));
 var cursorStack = [];
 var cursorIndex = 0; // The position of the next available cursor slot to push
                      // One past the position of the next cursor to pop
-var innerCursorMode = false;
+var isCursorMode = true;
+var isKnobMode = false;
+var isFileMenuMode = false;
 
 var directions = {
     left: new Point2(-1, 0),
@@ -62,7 +64,7 @@ var prevCursorQuadrant = {
     "sw": "se"
 };
 
-var bottomCurb = 100;
+var bottomCurb = 40;
 var topCurb = 0;
 var leftCurb = 0;
 var rightCurb = 0;
@@ -86,38 +88,44 @@ var tempBufferSize = new Point2();
 var containerElement;
 var helpElement;
 var viewportElement;
-var innerCursorElement;
+var knobElement;
 var cursorElement;
 var originElement;
 var centerElement;
-var menuElement;
+var inspectorElement;
+var cursorModeElement;
+var knobModeElement;
+var fileMenuModeElement;
 
 function main() {
 
-    menuElement = document.createElement("div");
-    document.body.appendChild(menuElement);
-    menuElement.style.visibility = "hidden";
-    menuElement.classList.add("menu");
+    inspectorElement = document.createElement("div");
+    document.body.appendChild(inspectorElement);
+    inspectorElement.style.visibility = "hidden";
+    inspectorElement.classList.add("inspector");
 
     // Extant elements
     containerElement = document.querySelector(".container");
     helpElement = document.querySelector(".help");
     viewportElement = document.querySelector(".viewport");
+    cursorModeElement = document.querySelector(".cursor-mode");
+    knobModeElement = document.querySelector(".knob-mode");
+    fileMenuModeElement = document.querySelector(".file-menu-mode");
 
     // Create elements
-    innerCursorElement = document.createElement("div");
+    knobElement = document.createElement("div");
     cursorElement = document.createElement("div");
     originElement = document.createElement("div");
     centerElement = document.createElement("div");
 
     // Annotate elements
-    innerCursorElement.classList.add("innerCursor");
+    knobElement.classList.add("knob");
     cursorElement.classList.add("cursor");
     originElement.classList.add("origin");
     centerElement.classList.add("center");
 
     // Compose elements
-    cursorElement.appendChild(innerCursorElement);
+    cursorElement.appendChild(knobElement);
     originElement.appendChild(cursorElement);
     centerElement.appendChild(originElement);
     viewportElement.appendChild(centerElement);
@@ -170,8 +178,8 @@ function drawFrustum() {
             point.y = top + y;
             var tileView = tileViews.get(point);
             if (!tileView) {
-                if (freeTiles.length) {
-                    tileView = freeTiles.pop();
+                if (freeTileViews.length) {
+                    tileView = freeTileViews.pop();
                     recycled++;
                 } else {
                     tileView = new TileView();
@@ -199,13 +207,13 @@ function drawFrustum() {
             tileViewsToFree.push(tileView);
         }
     });
-    freeTiles.swap(freeTiles.length, 0, tileViewsToFree);
+    freeTileViews.swap(freeTileViews.length, 0, tileViewsToFree);
     tileViewsToFree.forEach(function (tileView) {
         tileViews.delete(tileView.point);
         originElement.removeChild(tileView.element);
     });
 
-    //console.log("CREATED", created, "UNCHANGED", reused, "RECYCLED", recycled, "DISPOSED", tileViewsToFree.length, "USED", tileViews.length, "FREE", freeTiles.length);
+    //console.log("CREATED", created, "UNCHANGED", reused, "RECYCLED", recycled, "DISPOSED", tileViewsToFree.length, "USED", tileViews.length, "FREE", freeTileViews.length);
 }
 
 // TODO top down resize all views
@@ -221,17 +229,33 @@ function resize() {
 
 var cursorPx = new Region2(new Point2(), new Point2());
 var halfCursorSizePx = new Point2();
-var innerCursorPx = new Region2(new Point2(), new Point2());
+var knobPx = new Region2(new Point2(), new Point2());
 var originPx = new Point2();
 function draw() {
-    innerCursorPx.become(innerCursor).scaleThis(TileView.size);
-    innerCursorPx.size.x -= 12;
-    innerCursorPx.size.y -= 12;
-    innerCursorElement.style.opacity = innerCursorMode ? 1 : 0;
-    innerCursorElement.style.left = innerCursorPx.position.x + "px";
-    innerCursorElement.style.top = innerCursorPx.position.y + "px";
-    innerCursorElement.style.width = innerCursorPx.size.x + "px";
-    innerCursorElement.style.height = innerCursorPx.size.y + "px";
+    knobPx.become(knob).scaleThis(TileView.size);
+    knobPx.size.x -= 12;
+    knobPx.size.y -= 12;
+    knobElement.style.opacity = isKnobMode ? 1 : 0;
+    knobElement.style.left = knobPx.position.x + "px";
+    knobElement.style.top = knobPx.position.y + "px";
+    knobElement.style.width = knobPx.size.x + "px";
+    knobElement.style.height = knobPx.size.y + "px";
+
+    if (isCursorMode) {
+        cursorModeElement.classList.add("shown");
+    } else {
+        cursorModeElement.classList.remove("shown");
+    }
+    if (isKnobMode) {
+        knobModeElement.classList.add("shown");
+    } else {
+        knobModeElement.classList.remove("shown");
+    }
+    if (isFileMenuMode) {
+        fileMenuModeElement.classList.add("shown");
+    } else {
+        fileMenuModeElement.classList.remove("shown");
+    }
 
     cursorPx.become(cursor).scaleThis(TileView.size);
     cursorElement.style.left = cursorPx.position.x + "px";
@@ -265,20 +289,20 @@ var drawFrustumHandle = null;
 var position = new Point2();
 var newPosition = new Point2();
 var change = new Point2();
-function moveInnerCursor(direction, size) {
+function moveKnob(direction, size) {
     // directions: up, down, left, right
-    // size: either 1x1 or innerCursor size
-    // absolute position of the inner cursor
+    // size: either 1x1 or knob size
+    // absolute position of the knob
     change.become(directions[direction]).mulThis(size);
-    position.become(cursor.position).addThis(innerCursor.position);
+    position.become(cursor.position).addThis(knob.position);
     newPosition.become(position).addThis(change);
-    var quadrant = getCursorQuadrant();
+    var quadrant = getKnobQuadrant();
     // quadrant[0] === "n" or "c" means top adjacent
     // adjacent means that side must be pulled if moving away from it
 
     // push growing boundary
-    cursor.size.x = Math.max(cursor.size.x, newPosition.x - cursor.position.x + innerCursor.size.x);
-    cursor.size.y = Math.max(cursor.size.y, newPosition.y - cursor.position.y + innerCursor.size.y);
+    cursor.size.x = Math.max(cursor.size.x, newPosition.x - cursor.position.x + knob.size.x);
+    cursor.size.y = Math.max(cursor.size.y, newPosition.y - cursor.position.y + knob.size.y);
     if (newPosition.x < cursor.position.x) {
         var dx = newPosition.x - cursor.position.x;
         cursor.size.x -= dx;
@@ -306,27 +330,27 @@ function moveInnerCursor(direction, size) {
         cursor.size.x += change.x;
     }
 
-    innerCursor.position.become(newPosition).subThis(cursor.position);
+    knob.position.become(newPosition).subThis(cursor.position);
 }
 
-function getCursorQuadrant() {
-    var w = innerCursor.position.x === 0;
-    var e = innerCursor.position.x === cursor.size.x - innerCursor.size.x;
-    var n = innerCursor.position.y === 0;
-    var s = innerCursor.position.y === cursor.size.y - innerCursor.size.y;
+function getKnobQuadrant() {
+    var w = knob.position.x === 0;
+    var e = knob.position.x === cursor.size.x - knob.size.x;
+    var n = knob.position.y === 0;
+    var s = knob.position.y === cursor.size.y - knob.size.y;
     return (n && s ? "c" : (n ? "n" : "s")) + (e && w ? "c" : (w ? "w" : "e"));
 }
 
-function setCursorQuadrant(quadrant) {
+function setKnobQuadrant(quadrant) {
     if (quadrant[1] === "w") {
-        innerCursor.position.x = 0;
+        knob.position.x = 0;
     } else {
-        innerCursor.position.x = cursor.size.x - innerCursor.size.x;
+        knob.position.x = cursor.size.x - knob.size.x;
     }
     if (quadrant[0] === "n") {
-        innerCursor.position.y = 0;
+        knob.position.y = 0;
     } else {
-        innerCursor.position.y = cursor.size.y - innerCursor.size.y;
+        knob.position.y = cursor.size.y - knob.size.y;
     }
 }
 
@@ -339,7 +363,14 @@ function keyChange(event) {
 function cursorMode(event, key, keyCode) {
     if (event.type === "keyup") {
         if (keyCode === 13) {
-            return openMenu(cursorMode);
+            isCursorMode = false;
+            bottomCurb = 0;
+            return openInspector(function () {
+                bottomCurb = 40;
+                isCursorMode = true;
+                draw();
+                return cursorMode;
+            });
         }
     } else if (event.type === "keypress") {
         if (directionKeys[key]) {
@@ -365,35 +396,166 @@ function cursorMode(event, key, keyCode) {
                 }
             });
         } else if (key === "s") {
-            return enterInnerCursorMode(cursorMode);
+            return enterKnobMode(cursorMode);
+        } else if (key === "0") {
+            point.become(cursor.size).scaleThis(.5).floorThis();
+            cursor.size.become(Point2.one);
+            cursor.position.addThis(point);
+            knob.size.become(Point2.one);
+            draw();
         } else if (key === "I") { // grow cursor
-            var quadrant = getCursorQuadrant();
+            var quadrant = getKnobQuadrant();
             cursor.size.addThis(Point2.one).addThis(Point2.one);
             cursor.position.subThis(Point2.one);
-            setCursorQuadrant(quadrant);
+            setKnobQuadrant(quadrant);
             draw();
         } else if (key === "i") { // shrink cursor
-            // find the absolute center of the inner cursor
-            point.become(innerCursor.size)
-                .scaleThis(.5)
-                .floorThis()
-                .addThis(innerCursor.position);
-            // move the cursor to that position
-            cursor.position.addThis(point);
-            // reset the size of both the inner and outer cursor to 1x1
-            cursor.size.become(Point2.one);
-            innerCursor.size.become(Point2.one);
-            // and shift the inner cursor back to the middle of the outer cursor
-            innerCursor.position.become(Point2.zero);
+            var quadrant = getKnobQuadrant();
+            var nx = Math.max(1, cursor.size.x - 2);
+            var ny = Math.max(1, cursor.size.y - 2);
+            cursor.position.x -= Math.ceil((nx - cursor.size.x) / 2);
+            cursor.position.y -= Math.ceil((ny - cursor.size.y) / 2);
+            cursor.size.x = nx;
+            cursor.size.y = ny;
+            knob.size.x = Math.min(knob.size.x, cursor.size.x);
+            knob.size.y = Math.min(knob.size.y, cursor.size.y);
+            setKnobQuadrant(quadrant);
             draw();
-        } else if (key === "d") {
+        } else if (key === ":") {
+            return openFileMenu(function () {
+                return cursorMode;
+            });
+        }
+        // enter - open inspector for commands to perform on the selected region
+        // including the creation of a named region with triggers
+        // set the cursor position to the origin
+        // "(" begin macro end macro ")"
+        // "." replay last command
+        // "/" chat
+        // "?" toggle help
+        // number
+        // save context (cursor etc)
+        // restore context (cursor etc)
+    }
+    return cursorOrKnobMode(event, key, keyCode, cursorMode);
+}
+
+function enterKnobMode(returnMode) {
+
+    function knobMode(event, key, keyCode) {
+        if (event.type === "keyup") {
+            if (keyCode === 27) {
+                return exit();
+            }
+        } else if (event.type === "keypress") {
+            if (directionKeys[key]) {
+                // move
+                moveKnob(directionKeys[key], knob.size);
+                draw();
+            } else if (directionKeys[key.toLowerCase()]) {
+                // creep
+                moveKnob(directionKeys[key.toLowerCase()], Point2.one);
+                draw();
+            } else if (key === "o") {
+                // rotate knob quadrant
+                var quadrant = getKnobQuadrant();
+                var nextQuadrant = nextCursorQuadrant[quadrant];
+                setKnobQuadrant(nextQuadrant);
+                flipBuffer(quadrant, nextQuadrant);
+                draw();
+            } else if (key === "O") {
+                // rotate knob quadrant
+                var quadrant = getKnobQuadrant();
+                var prevQuadrant = prevCursorQuadrant[quadrant];
+                setKnobQuadrant(prevQuadrant);
+                flipBuffer(quadrant, prevQuadrant);
+                draw();
+            } else if (key === "g") { // center the knob on the origin
+            // TODO "gg" for origin, "g." for other marked locations
+                point.become(knob.size).subThis(Point2.one).scaleThis(.5).floorThis();
+                cursor.position.become(Point2.zero).subThis(knob.position).subThis(point);
+                draw();
+            // TODO "G" mark center of knob as location
+            } else if (key === "r") {
+                var quadrant = getKnobQuadrant();
+                var nextQuadrant = nextCursorQuadrant[quadrant];
+                point.become(knob.position);
+                setKnobQuadrant(nextQuadrant);
+                cursor.position.subThis(knob.position).addThis(point);
+                flipBuffer(quadrant, nextQuadrant);
+                draw();
+            } else if (key === "R") {
+                var quadrant = getKnobQuadrant();
+                var prevQuadrant = prevCursorQuadrant[quadrant];
+                point.become(knob.position);
+                setKnobQuadrant(prevQuadrant);
+                cursor.position.subThis(knob.position).addThis(point);
+                flipBuffer(quadrant, prevQuadrant);
+                draw();
+            } else if (key === "t") { // transpose
+                var quadrant = getKnobQuadrant();
+                transposeBuffer(quadrant);
+                point.become(knob.position);
+                var temp = cursor.size.x;
+                cursor.size.x = cursor.size.y;
+                cursor.size.y = temp;
+                setKnobQuadrant(quadrant);
+                point.subThis(knob.position);
+                cursor.position.addThis(point);
+                draw();
+            } else if (key === "I") { // push cursor stack
+                // TODO remember larger cursors if they still fit
+                cursorStack[cursorIndex++] = knob.size.clone();
+                // grow the outer cursor if necessary
+                if (knob.size.equals(cursor.size)) {
+                    cursor.size.addThis(Point2.one).addThis(Point2.one);
+                    cursor.position.subThis(Point2.one);
+                }
+                // grow knob to match cursor size
+                knob.size.become(cursor.size);
+                knob.position.become(Point2.zero);
+                draw();
+            } else if (key === "i") { // pop cursor stack
+                if (cursorIndex > 0) {
+                    // restore smaller remembered cursor
+                    var quadrant = getKnobQuadrant();
+                    knob.size.become(cursorStack[--cursorIndex]);
+                    setKnobQuadrant(quadrant);
+                    draw();
+                } else {
+                    cursor.position.addThis(knob.position);
+                    cursor.size.become(knob.size);
+                    knob.position.become(Point2.zero);
+                    draw();
+                }
+            } else if (key === "s") {
+                return exit();
+            }
+        }
+        return cursorOrKnobMode(event, key, keyCode, knobMode);
+    }
+
+    function exit() {
+        isKnobMode = false;
+        draw();
+        return returnMode;
+    }
+
+    isKnobMode = true;
+    draw();
+    return knobMode;
+}
+
+function cursorOrKnobMode(event, key, keyCode, mode) {
+    if (event.type === "keypress") {
+        if (key === "d") {
             cursorEach(function (tile) {
                 tile.space = true;
             });
-        } else if (key == "~") {
+        } else if (key === "f") {
             cursorEach(function (tile) {
-                tile.space = !tile.space;
-            });
+                tile.space = false;
+            })
         } else if (key === "c" || key === "y") {
             buffer.clear();
             bufferSize.become(cursor.size);
@@ -417,6 +579,10 @@ function cursorMode(event, key, keyCode) {
                 point.y = y % bufferSize.y;
                 tile.space = buffer.get(point);
             });
+        } else if (key == "~") {
+            cursorEach(function (tile) {
+                tile.space = !tile.space;
+            });
         } else if (key === "-") {
             cursorEach(function (tile, x, y) {
                 point.x = x % bufferSize.x;
@@ -439,12 +605,8 @@ function cursorMode(event, key, keyCode) {
             cursor.position.become(Point2.zero).subThis(point);
             draw();
         // TODO "G" mark a location
-        } else if (key === "f") {
-            cursorEach(function (tile) {
-                tile.space = false;
-            })
         }
-        // enter - open menu for commands to perform on the selected region
+        // enter - open inspector for commands to perform on the selected region
         // including the creation of a named region with triggers
         // set the cursor position to the origin
         // "(" begin macro end macro ")"
@@ -455,114 +617,82 @@ function cursorMode(event, key, keyCode) {
         // save context (cursor etc)
         // restore context (cursor etc)
     }
-    return cursorMode;
+    return mode;
 }
 
-function enterInnerCursorMode(returnMode) {
-
-    function mode(event, key, keyCode) {
+function openFileMenu(callback) {
+    isFileMenuMode = true;
+    draw();
+    function fileMenuMode(event, key, keyCode) {
         if (event.type === "keyup") {
             if (keyCode === 27) {
-                return exit();
+                return closeFileMenu();
             }
         } else if (event.type === "keypress") {
-            if (directionKeys[key]) {
-                // move
-                moveInnerCursor(directionKeys[key], innerCursor.size);
-                draw();
-            } else if (directionKeys[key.toLowerCase()]) {
-                // creep
-                moveInnerCursor(directionKeys[key.toLowerCase()], Point2.one);
-                draw();
-            } else if (key === "o") {
-                // rotate inner cursor quadrant
-                var quadrant = getCursorQuadrant();
-                var nextQuadrant = nextCursorQuadrant[quadrant];
-                setCursorQuadrant(nextQuadrant);
-                flipBuffer(quadrant, nextQuadrant);
-                draw();
-            } else if (key === "O") {
-                // rotate inner cursor quadrant
-                var quadrant = getCursorQuadrant();
-                var prevQuadrant = prevCursorQuadrant[quadrant];
-                setCursorQuadrant(prevQuadrant);
-                flipBuffer(quadrant, prevQuadrant);
-                draw();
-            } else if (key === "g") { // center the inner cursor on the origin
-            // TODO "gg" for origin, "g." for other marked locations
-                point.become(innerCursor.size).subThis(Point2.one).scaleThis(.5).floorThis();
-                cursor.position.become(Point2.zero).subThis(innerCursor.position).subThis(point);
-                draw();
-            // TODO "G" mark center of inner cursor as location
-            } else if (key === "r") {
-                var quadrant = getCursorQuadrant();
-                var nextQuadrant = nextCursorQuadrant[quadrant];
-                point.become(innerCursor.position);
-                setCursorQuadrant(nextQuadrant);
-                cursor.position.subThis(innerCursor.position).addThis(point);
-                flipBuffer(quadrant, nextQuadrant);
-                draw();
-            } else if (key === "R") {
-                var quadrant = getCursorQuadrant();
-                var prevQuadrant = prevCursorQuadrant[quadrant];
-                point.become(innerCursor.position);
-                setCursorQuadrant(prevQuadrant);
-                cursor.position.subThis(innerCursor.position).addThis(point);
-                flipBuffer(quadrant, prevQuadrant);
-                draw();
-            } else if (key === "t") { // transpose
-                var quadrant = getCursorQuadrant();
-                transposeBuffer(quadrant);
-                point.become(innerCursor.position);
-                var temp = cursor.size.x;
-                cursor.size.x = cursor.size.y;
-                cursor.size.y = temp;
-                setCursorQuadrant(quadrant);
-                point.subThis(innerCursor.position);
-                cursor.position.addThis(point);
-                draw();
-            } else if (key === "I") { // push cursor stack
-                // TODO remember larger cursors if they still fit
-                cursorStack[cursorIndex++] = innerCursor.size.clone();
-                // grow the outer cursor if necessary
-                if (innerCursor.size.equals(cursor.size)) {
-                    cursor.size.addThis(Point2.one).addThis(Point2.one);
-                    cursor.position.subThis(Point2.one);
-                }
-                // grow inner cursor to match cursor size
-                innerCursor.size.become(cursor.size);
-                innerCursor.position.become(Point2.zero);
-                draw();
-            } else if (key === "i") { // pop cursor stack
-                if (cursorIndex > 0) {
-                    // restore smaller remembered cursor
-                    var quadrant = getCursorQuadrant();
-                    innerCursor.size.become(cursorStack[--cursorIndex]);
-                    setCursorQuadrant(quadrant);
-                    draw();
-                } else {
-                    return exit()(event, key, keyCode);
-                }
+            if (key === "l") {
+                loadFromLocalStorage();
+                return closeFileMenu();
             } else if (key === "s") {
-                return exit();
-            } else {
-                // TODO this could end poorly
-                returnMode = returnMode(event, key, keyCode);
-                return mode;
+                saveToLocalStorage();
+                return closeFileMenu();
             }
         }
-        return mode;
+        return fileMenuMode;
     }
-
-    function exit() {
-        innerCursorMode = false;
+    function closeFileMenu() {
+        isFileMenuMode = false;
         draw();
-        return returnMode;
+        return callback();
     }
+    return fileMenuMode;
+}
 
-    innerCursorMode = true;
+function loadFromLocalStorage() {
+    var delf = localStorage.getItem("delf");
+    if (delf) {
+        map.clear();
+        tileViews.clear();
+        JSON.parse(delf).map.forEach(function (tuple) {
+            point.x = tuple[0];
+            point.y = tuple[1];
+            map.get(point).space = true;
+        });
+        draw();
+    }
+}
+
+function saveToLocalStorage() {
+    var x;
+    localStorage.setItem("delf", x = JSON.stringify({
+        map: map.filter(function (tile, point) {
+            return tile.space;
+        })
+        .map(function (tile, point) {
+            return [point.x, point.y];
+        })
+    }));
+}
+
+function openInspector(callback) {
+    rightCurb = window.innerWidth / 3;
+    inspectorElement.style.visibility = "visible";
     draw();
-    return mode;
+    function inspectorMode(event, key, keyCode) {
+        if (event.type === "keyup") {
+            if (keyCode === 27) {
+                closeInspector();
+                return callback();
+            }
+        } else if (event.type === "keypress") {
+        }
+        return inspectorMode;
+    }
+    function closeInspector() {
+        inspectorElement.style.visibility = "hidden";
+        rightCurb = 0;
+        draw();
+    }
+    return inspectorMode;
 }
 
 function makeIntegerMode(number, callback) {
@@ -601,28 +731,6 @@ function makeCountMode(mode, count) {
     return function (event, key, keyCode) {
         return mode(event, key, keyCode, count);
     };
-}
-
-function openMenu(returnMode) {
-    rightCurb = window.innerWidth / 3;
-    menuElement.style.visibility = "visible";
-    draw();
-    function menuMode(event, key, keyCode) {
-        if (event.type === "keyup") {
-            if (keyCode === 27) {
-                closeMenu();
-                return returnMode;
-            }
-        } else if (event.type === "keypress") {
-        }
-        return menuMode;
-    }
-    function closeMenu() {
-        menuElement.style.visibility = "hidden";
-        rightCurb = 0;
-        draw();
-    }
-    return menuMode;
 }
 
 function flipBuffer(prev, next) {

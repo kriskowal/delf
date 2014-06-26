@@ -8,26 +8,43 @@
         <div class="container">
             <div class="viewport">
             </div>
-            <div class="help">
-                <em>d</em> dig &nbsp;
-                <em>f</em> fill &nbsp;
-                <em>g</em> goto origin &nbsp;
-                <em>hjkl</em> move &nbsp;
-                <em>shift</em> select/creep &nbsp;
-                <em>s</em> select&hellip; &nbsp;
-                <!--<li><em>z/u</em> undo-->
-                <em>x</em> cut &nbsp;
-                <em>c/y</em> copy &nbsp;
-                <em>v/p</em> paste &nbsp;
-                <em>+</em> add &nbsp;
-                <em>-</em> subtract &nbsp;
-                <em>~</em> toggle &nbsp;
-                <div class="select-mode-help">
-                    <em>o/O</em> rotate quadrant &nbsp;
-                    <em>r/R</em> rotate around knob  &nbsp;
-                    <em>i/I</em> shrink or grow knob &nbsp;
-                    <em>t</em> transpose &nbsp;
-                    <em>s/escape</em> back&hellip; &nbsp;
+            <div class="modeline">
+                <div class="mode cursor-mode shown">
+                    <strong>cursor mode:</strong>
+                    <span class="button"><u>d</u>ig</span>
+                    <span class="button"><u>f</u>ill</span>
+                    <span class="button"><u>g</u>o (origin)</span>
+                    <span class="button"><u>hjkl</u> move</span>
+                    <span class="button"><i>shift</i> creep</span>
+                    <span class="button"><u>i</u>/<u>I</u> resize</span>
+                    <span class="button">&hellip;to <u>0</u></span>
+                    <span class="button"><u>s</u>elect&hellip;</span>
+                    <span class="button"><u>x</u> cut</span>
+                    <span class="button"><u>c</u>opy / <u>y</u>ank</span>
+                    <span class="button"><u>v</u> / <u>p</u>aste</span>
+                    <span class="button">~ toggle</span>
+                    <span class="button">+</span>
+                    <span class="button">-</span>
+                </div>
+                <div class="mode knob-mode">
+                    <strong>knob mode:</strong>
+                    <span class="button"><u>hjkl</u> move</span>
+                    <span class="button"><i>shift</i> creep</span>
+                    <span class="button"><u>o</u>rbit</span>
+                    <span class="button"><u>r</u>otate</span>
+                    <span class="button">res<u>i</u>ze</span>
+                    <span class="button"><i>shift</i> reverse</span>
+                    <span class="button"><u>t</u>ranspose</span>
+                    <span class="button"><u>s</u> or <i>escape</i> back&hellip;</span>
+                </div>
+                <div class="mode file-menu-mode">
+                    <strong>file mode:</strong>
+                    <span class="button"><u>s</u>ave</span>
+                    <span class="button"><u>l</u>load</span>
+                    <!--
+                    <span class="button"><u>d</u>ownload</span>
+                    <span class="button"><u>u</u>pload</span>
+                    -->
                 </div>
             </div>
         </div>

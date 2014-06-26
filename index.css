@@ -1,4 +1,10 @@
 
+*, *:before, *:after {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
 body {
     height: 100%;
     width: 100%;
@@ -48,10 +54,10 @@ body {
     */
 }
 
-.innerCursor {
+.knob {
     position: absolute;
     border: dashed white 1px;
-    margin: 5px;
+    margin: 6px;
     border-radius: 10px;
     transition: top 100ms, left 100ms, width 100ms, height 100ms, opacity 500ms;
     -webkit-transition: top 100ms, left 100ms, width 100ms, height 100ms, opacity 500ms;
@@ -70,11 +76,19 @@ body {
     background-color: #333344;
 }
 
-.menu {
+.inspector {
     background-color: #334455;
     position: absolute;
     width: 30%;
     right: 0;
+    height: 100%;
+}
+
+.menu {
+    background-color: #334455;
+    position: absolute;
+    width: 30%;
+    left: 0;
     height: 100%;
 }
 
@@ -91,22 +105,53 @@ body {
 }
 
 .viewport {
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    bottom: 100px;
+    bottom: 0;
     overflow: hidden;
 }
 
-.help {
+.modeline {
     position: absolute;
-    color: #abb;
-    font-size: 20px;
-    padding: 10px;
-    background-color: #334455;
-    height: 3em;
+    overflow: hidden;
+    height: 40px;
     left: 0;
     right: 0;
     bottom: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.mode {
+    position: absolute;
+    color: #abb;
+    font-size: 20px;
+    padding-left: 10px;
+    background-color: #334455;
+    line-height: 40px;
+    height: 40px;
+    top: 40px;
+    left: 0;
+    right: 0;
+    transition: top 500ms;
+    -webkit-transition: top 500ms;
+}
+
+.mode u, .mode i {
+    color: #cee;
+}
+
+.mode.shown {
+    top: 0;
+}
+
+.button {
+    cursor: pointer;
+    border: 1px solid #777777;
+    border-radius: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
