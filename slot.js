@@ -1,59 +1,66 @@
+"use strict";
 
 module.exports = Slot;
-function Slot(top, bottom, parent, document) {
-    this.top = top;
+function Slot(bottom) {
     this.bottom = bottom;
-    this.parent = parent || top.parentNode;
-    this.document = document || this.parent.ownerDocument;
-    this.filled = false;
+    this.top = null;
+    this.document = bottom.ownerDocument;
 }
 
 Slot.fromElement = function (element) {
-    return new Slot(null, null, element);
+    var document = element.ownerDocument;
+    element.innerHTML = "";
+    var bottom = document.createTextNode("");
+    element.appendChild(bottom);
+    return new Slot(bottom);
 };
 
-Slot.prototype.fill = function (fragment) {
-    if (this.filled) {
-        throw new Error("Cannot inject over already injected fragment");
+Slot.prototype.insert = function (body) {
+    if (this.top) {
+        throw new Error("Can't fill slot that has already been occupied");
     }
-    this.parent.insertBefore(fragment, this.bottom);
-    this.filled = true;
-};
-
-Slot.prototype.clear = function () {
-    if (!this.filled) {
-        throw new Error("Cannot retract from an already empty slot");
+    if (!this.bottom) {
+        throw new Error("Can't fill a slot that has been destroyed");
     }
-    var document = this.document;
-    var fragment = document.createDocumentFragment();
-    var parent = this.parent;
-    var at = this.top.nextSibling;
-    while (at !== this.bottom) {
-        var next = at.nextSibling;
-        fragment.appendChild(at);
+    var parent = this.bottom.parentNode;
+    if (!parent) {
+        throw new Error("Can't fill a slot thas is not parented on the document");
+    }
+    var at = body.firstChild;
+    var next;
+    this.top = at;
+    while (at) {
+        next = at.nextSibling;
+        parent.insertBefore(at, this.bottom);
         at = next;
     }
-    this.filled = false;
-    return fragment;
 };
 
-// for debugging
-Slot.prototype.show = function (label) {
-    if (this.top && this.bottom) {
-        if (label) {
-            this.top.nodeValue = "<" + label + ">";
-            this.bottom.nodeValue = "</" + label + ">";
+Slot.prototype.extract = function (body) {
+    if (!this.top) {
+        throw new Error("Cannot retract from an already empty slot");
+    }
+    var parent = this.bottom.parentNode;
+    var at = this.top;
+    var next;
+    while (at !== this.bottom) {
+        next = at.nextSibling;
+        if (body) {
+            body.appendChild(at);
         } else {
-            this.top.nodeValue = "--->";
-            this.bottom.nodeValue = "<---";
+            parent.removeChild(at);
         }
+        at = next;
     }
+    this.top = null;
 };
 
-Slot.prototype.hide = function () {
-    if (this.top && this.bottom) {
-        this.top.nodeValue = "";
-        this.bottom.nodeValue = "";
+Slot.prototype.destroy = function () {
+    if (this.top) {
+        this.extract();
     }
+    var parent = this.bottom.parentNode;
+    parent.removeChild(this.bottom);
+    this.bottom = null;
 };
 

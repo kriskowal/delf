@@ -1,3 +1,4 @@
+"use strict";
 
 var Point2 = require("./point2");
 

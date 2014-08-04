@@ -1,3 +1,4 @@
+"use strict";
 
 module.exports = Text;
 function Text(slot, template) {

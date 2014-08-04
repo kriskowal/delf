@@ -8,10 +8,18 @@
   "translators": {
     "html": "./translate-html"
   },
+  "redirects": {
+    "repeat.html": "./repeat.js",
+    "reveal.html": "./reveal.js"
+  },
   "dependencies": {
     "collections": "^2.0.1",
     "domenic": "0.0.0",
-    "mr": "^2.0.3",
+    "mr": "^2.0.4",
+    "q": "^2.0.2",
     "setimmediate": "^1.0.2"
+  },
+  "scripts": {
+    "bundle": "mrs index.js > bundle.js"
   }
 }

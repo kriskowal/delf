@@ -1,3 +1,4 @@
+"use strict";
 
 module.exports = Region;
 function Region(position, size) {

@@ -1,3 +1,4 @@
+"use strict";
 
 var FastMap = require("collections/fast-map");
 var Point2 = require("./point2");
@@ -27,7 +28,7 @@ Area.prototype.sliceThis = function (position, size) {
     return new Area(size, this.position.add(position), this.tiles, this.tileViews);
 };
 
-Area.prototype.forEach = function (callback) {
+Area.prototype.forEach = function (callback, thisp) {
     var width = this.size.x;
     var height = this.size.y;
     for (var x = 0; x < width; x++) {
@@ -35,7 +36,7 @@ Area.prototype.forEach = function (callback) {
             point.x = this.position.x + x;
             point.y = this.position.y + y;
             var tileView = this.tileViews && this.tileViews.get(point);
-            callback(this.tiles.get(point), x, y);
+            callback.call(thisp, this.tiles.get(point), x, y);
             if (tileView) {
                 tileView.draw();
             }
