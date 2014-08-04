@@ -1,3 +1,6 @@
+"use strict";
+
+var Slot = require("./slot");
 
 require("collections/shim-array");
 var FastMap = require("collections/fast-map");
@@ -6,11 +9,12 @@ var Point2 = require("./point2");
 var Region2 = require("./region2");
 var TileView = require("./tile-view");
 var Tile = require("./tile");
+var Area = require("./area");
 
 var tileViews = new FastMap(); // point to tile view
 var freeTileViews = [];
-var map = new FastMap(); // point to tile model
-map.getDefault = function (point) {
+var tiles = new FastMap(); // point to tile model
+tiles.getDefault = function (point) {
     var tile = new Tile(point);
     this.set(point.clone(), tile);
     return tile;
@@ -22,6 +26,8 @@ var knob = new Region2(new Point2(0, 0), new Point2(1, 1));
 var cursorStack = [];
 var cursorIndex = 0; // The position of the next available cursor slot to push
                      // One past the position of the next cursor to pop
+var cursorArea = new Area(cursor.size, cursor.position, tiles, tileViews);
+
 var isCursorMode = true;
 var isKnobMode = false;
 var isFileMenuMode = false;
@@ -77,17 +83,16 @@ var tileViewsToFree = [];
 var point = new Point2();
 
 var mode = cursorMode;
+var hold = false;
 
 // TODO use a Bin abstraction that captures the data and dimensions and has the
 // methods for transpose etc
 var buffer = new FastMap();
 var bufferSize = new Point2();
+var bufferArea = new Area(bufferSize);
 var tempBuffer = new FastMap();
 var tempBufferSize = new Point2();
 
-var containerElement;
-var helpElement;
-var viewportElement;
 var knobElement;
 var cursorElement;
 var originElement;
@@ -97,44 +102,31 @@ var cursorModeElement;
 var knobModeElement;
 var fileMenuModeElement;
 
+var DelfView = require("./delf.html");
+var delfView;
+
 function main() {
 
-    inspectorElement = document.createElement("div");
-    document.body.appendChild(inspectorElement);
-    inspectorElement.style.visibility = "hidden";
-    inspectorElement.classList.add("inspector");
+    delfView = new DelfView(Slot.fromElement(document.body));
 
-    // Extant elements
-    containerElement = document.querySelector(".container");
-    helpElement = document.querySelector(".help");
-    viewportElement = document.querySelector(".viewport");
-    cursorModeElement = document.querySelector(".cursor-mode");
-    knobModeElement = document.querySelector(".knob-mode");
-    fileMenuModeElement = document.querySelector(".file-menu-mode");
+    knobElement = delfView.viewport.knob;
+    cursorElement = delfView.viewport.cursor;
+    originElement = delfView.viewport.origin;
+    centerElement = delfView.viewport.center;
 
-    // Create elements
-    knobElement = document.createElement("div");
-    cursorElement = document.createElement("div");
-    originElement = document.createElement("div");
-    centerElement = document.createElement("div");
-
-    // Annotate elements
-    knobElement.classList.add("knob");
-    cursorElement.classList.add("cursor");
-    originElement.classList.add("origin");
-    centerElement.classList.add("center");
-
-    // Compose elements
-    cursorElement.appendChild(knobElement);
-    originElement.appendChild(cursorElement);
-    centerElement.appendChild(originElement);
-    viewportElement.appendChild(centerElement);
+    cursorModeElement = delfView.cursorMode.element;
+    knobModeElement = delfView.knobMode.element;
+    fileMenuModeElement = delfView.fileMode.element;
+    inspectorElement = delfView.inspector;
 
     // Event listeners
     window.addEventListener("resize", resize);
     window.addEventListener("keydown", keyChange);
     window.addEventListener("keyup", keyChange);
     window.addEventListener("keypress", keyChange);
+    window.addEventListener("mousedown", keyChange);
+    window.addEventListener("mouseup", keyChange);
+    window.addEventListener("mousemove", keyChange);
 
     resize();
     draw();
@@ -188,7 +180,7 @@ function drawFrustum() {
                 tileView.reset();
                 tileView.mark = true;
                 tileView.point.become(point);
-                tileView.tile = map.get(tileView.point);
+                tileView.tile = tiles.get(tileView.point);
                 tileView.draw();
                 originElement.insertBefore(tileView.element, cursorElement);
                 tileViews.set(tileView.point, tileView);
@@ -265,11 +257,13 @@ function draw() {
 
     halfCursorSizePx.become(cursor.size).scaleThis(TileView.size).scaleThis(.5);
 
-    originPx.x = (leftCurb - rightCurb) / 2;
-    originPx.y = (topCurb - bottomCurb) / 2;
-    originPx.subThis(cursorPx.position).subThis(halfCursorSizePx);
-    originElement.style.left = originPx.x + "px";
-    originElement.style.top = originPx.y + "px";
+    if (!hold) {
+        originPx.x = (leftCurb - rightCurb) / 2;
+        originPx.y = (topCurb - bottomCurb) / 2;
+        originPx.subThis(cursorPx.position).subThis(halfCursorSizePx);
+        originElement.style.left = originPx.x + "px";
+        originElement.style.top = originPx.y + "px";
+    }
 
     requestDrawFrustum();
 }
@@ -402,6 +396,7 @@ function cursorMode(event, key, keyCode) {
             cursor.size.become(Point2.one);
             cursor.position.addThis(point);
             knob.size.become(Point2.one);
+            knob.position.become(Point2.zero);
             draw();
         } else if (key === "I") { // grow cursor
             var quadrant = getKnobQuadrant();
@@ -528,6 +523,13 @@ function enterKnobMode(returnMode) {
                     knob.position.become(Point2.zero);
                     draw();
                 }
+            } else if (key === "0") {
+                point.become(cursor.size).scaleThis(.5).floorThis();
+                cursor.size.become(Point2.one);
+                cursor.position.addThis(point);
+                knob.size.become(Point2.one);
+                knob.position.become(Point2.zero);
+                return exit();
             } else if (key === "s") {
                 return exit();
             }
@@ -549,17 +551,13 @@ function enterKnobMode(returnMode) {
 function cursorOrKnobMode(event, key, keyCode, mode) {
     if (event.type === "keypress") {
         if (key === "d") {
-            cursorEach(function (tile) {
-                tile.space = true;
-            });
+            cursorArea.dig();
         } else if (key === "f") {
-            cursorEach(function (tile) {
-                tile.space = false;
-            })
+            cursorArea.fill();
         } else if (key === "c" || key === "y") {
             buffer.clear();
             bufferSize.become(cursor.size);
-            cursorEach(function (tile, x, y) {
+            cursorArea.forEach(function (tile, x, y) {
                 point.x = x;
                 point.y = y;
                 buffer.set(point.clone(), tile.space);
@@ -567,24 +565,22 @@ function cursorOrKnobMode(event, key, keyCode, mode) {
         } else if (key === "x") {
             buffer.clear();
             bufferSize.become(cursor.size);
-            cursorEach(function (tile, x, y) {
+            cursorArea.forEach(function (tile, x, y) {
                 point.x = x;
                 point.y = y;
                 buffer.set(point.clone(), tile.space);
                 tile.space = false;
             });
         } else if (key === "v" || key === "p") {
-            cursorEach(function (tile, x, y) {
+            cursorArea.forEach(function (tile, x, y) {
                 point.x = x % bufferSize.x;
                 point.y = y % bufferSize.y;
                 tile.space = buffer.get(point);
             });
         } else if (key == "~") {
-            cursorEach(function (tile) {
-                tile.space = !tile.space;
-            });
+            cursorArea.flip();
         } else if (key === "-") {
-            cursorEach(function (tile, x, y) {
+            cursorArea.forEach(function (tile, x, y) {
                 point.x = x % bufferSize.x;
                 point.y = y % bufferSize.y;
                 if (buffer.get(point)) {
@@ -592,7 +588,7 @@ function cursorOrKnobMode(event, key, keyCode, mode) {
                 }
             });
         } else if (key === "+") {
-            cursorEach(function (tile, x, y) {
+            cursorArea.forEach(function (tile, x, y) {
                 point.x = x % bufferSize.x;
                 point.y = y % bufferSize.y;
                 if (buffer.get(point)) {
@@ -635,6 +631,11 @@ function openFileMenu(callback) {
             } else if (key === "s") {
                 saveToLocalStorage();
                 return closeFileMenu();
+            } else if (key === "1") {
+                var generateDungeon = require("./generate-dungeon");
+                generateDungeon(cursorArea);
+                draw();
+                return closeFileMenu();
             }
         }
         return fileMenuMode;
@@ -650,12 +651,12 @@ function openFileMenu(callback) {
 function loadFromLocalStorage() {
     var delf = localStorage.getItem("delf");
     if (delf) {
-        map.clear();
+        tiles.clear();
         tileViews.clear();
-        JSON.parse(delf).map.forEach(function (tuple) {
+        JSON.parse(delf).tiles.forEach(function (tuple) {
             point.x = tuple[0];
             point.y = tuple[1];
-            map.get(point).space = true;
+            tiles.get(point).space = true;
         });
         draw();
     }
@@ -664,10 +665,10 @@ function loadFromLocalStorage() {
 function saveToLocalStorage() {
     var x;
     localStorage.setItem("delf", x = JSON.stringify({
-        map: map.filter(function (tile, point) {
+        tiles: tiles.filter(function (tile, point) {
             return tile.space;
         })
-        .map(function (tile, point) {
+        .tiles(function (tile, point) {
             return [point.x, point.y];
         })
     }));
@@ -811,19 +812,13 @@ function transposeBuffer(quadrant) {
     tempBufferSize = temp;
 }
 
-function cursorEach(callback) {
-    var width = cursor.size.x;
-    var height = cursor.size.y;
-    for (var x = 0; x < width; x++) {
-        for (var y = 0; y < height; y++) {
-            point.x = cursor.position.x + x;
-            point.y = cursor.position.y + y;
-            var tileView = tileViews.get(point);
-            callback(map.get(point), x, y);
-            if (tileView) {
-                tileView.draw();
-            }
+function getComponent(event) {
+    var target = event.target;
+    while (target) {
+        if (target.component) {
+            return target.component;
         }
+        target = target.parentNode;
     }
 }
 

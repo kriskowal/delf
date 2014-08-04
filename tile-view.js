@@ -8,6 +8,7 @@ function TileView() {
     this.tile = null; // model
     this.element = document.createElement("div");
     this.element.className = "tile";
+    this.element.component = this;
     // For mark and sweep free list collection
     this.mark = null;
 }

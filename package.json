@@ -5,9 +5,13 @@
   "description": "",
   "main": "index.js",
   "author": "Kris Kowal",
+  "translators": {
+    "html": "./translate-html"
+  },
   "dependencies": {
     "collections": "^2.0.1",
-    "setimmediate": "^1.0.2",
-    "mr": "^2.0.3"
+    "domenic": "0.0.0",
+    "mr": "^2.0.3",
+    "setimmediate": "^1.0.2"
   }
 }
