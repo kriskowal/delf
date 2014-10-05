@@ -20,6 +20,10 @@
     "setimmediate": "^1.0.2"
   },
   "scripts": {
-    "bundle": "mrs index.js > bundle.js"
+    "bundle": "mrs index.js > bundle.js",
+    "test": "jasminum test"
+  },
+  "devDependencies": {
+    "jasminum": "0.0.4"
   }
 }
