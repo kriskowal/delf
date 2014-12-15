@@ -1,0 +1,26 @@
+
+dice <- @dice.iterations.flatten{dice};
+
+value <- dice.(length && every{value.defined()} ? sum{value} : null);
+
+@dice {
+    values <- @this.parseDiceExpression(@this.expression);
+}
+
+@dice:iteration {
+    dice <- @count.iterations.map{die};
+}
+
+@count {
+    values <- @dice:iteration.value.count.range();
+}
+
+@type {
+    exclusive: true;
+    value <- @this.sidesToType.property(@dice:iteration.value.sides);
+}
+
+@die {
+    @count:iteration.die <- this;
+}
+

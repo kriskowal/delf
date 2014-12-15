@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="component" id="../dice.tag">
+        <link rel="component" id="montag/button.tag">
+        <link rel="component" id="montag/text.tag">
+        <link rel="component" id="montag/text-field.tag">
+        <link rel="stylesheet" id="./app.css">
+        <link rel="bindings" id="./app.frb">
+    </head>
+    <body>
+        <div class="panel">
+            <div class="dice">
+                <dice component="dice"></dice>
+            </div>
+            <div><text component="value"></text></div>
+            <div>
+                <text-field component="expression" placeholder="e.g., 2d6 + 2c" interactive></text-field>
+                <button component="button">Roll</button>
+            </div>
+        </div>
+    </body>
+</html>

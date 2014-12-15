@@ -1,0 +1,46 @@
+
+body {
+}
+
+.glyph {
+    font-family: Apple Symbols, Arial;
+    white-space: nowrap;
+}
+
+.selector {
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    overflow: hidden;
+}
+
+.browser {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.browser-glyph {
+    height: 400px;
+    width: 400px;
+    font-size: 400px;
+    line-height: 400px;
+    text-align: center;
+    outline: dotted black 1px;
+}
+
+.browser-entity-option {
+    font-size: 40px;
+    line-height: 60px;
+}

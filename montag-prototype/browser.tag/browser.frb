@@ -1,0 +1,26 @@
+
+@glyph {
+    value <- @this.entity.glyph;
+}
+
+@glyphContainer {
+    style.get("webkitTransform") <- @this.entity.transform;
+}
+
+@entityOptions {
+    rowHeight: 60;
+    values <- @this.entities.toMap().entries().map{{name: .0, entity: .1}};
+}
+
+@entityOptionLabel {
+    entity <- @entityOptions:iteration.value.entity;
+}
+
+@entityOptionName {
+    value <- @entityOptions:iteration.value.name;
+}
+
+@entityOptionGlyph {
+    value <- @entityOptions:iteration.value.entity.glyph;
+}
+

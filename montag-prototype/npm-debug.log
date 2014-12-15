@@ -1,0 +1,458 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install' ]
+2 info using npm@1.4.3
+3 info using node@v0.10.26
+4 verbose readDependencies using package.json deps
+5 verbose install where, deps [ '/Users/kris/delf', [ 'montag', 'mr', 'pegjs' ] ]
+6 info preinstall delf@0.0.0
+7 verbose readDependencies using package.json deps
+8 verbose cache add [ 'pegjs@git://github.com/dmajda/pegjs.git', null ]
+9 verbose cache add name=undefined spec="pegjs@git://github.com/dmajda/pegjs.git" args=["pegjs@git://github.com/dmajda/pegjs.git",null]
+10 verbose parsed url { protocol: null,
+10 verbose parsed url   slashes: null,
+10 verbose parsed url   auth: null,
+10 verbose parsed url   host: null,
+10 verbose parsed url   port: null,
+10 verbose parsed url   hostname: null,
+10 verbose parsed url   hash: null,
+10 verbose parsed url   search: null,
+10 verbose parsed url   query: null,
+10 verbose parsed url   pathname: 'pegjs@git://github.com/dmajda/pegjs.git',
+10 verbose parsed url   path: 'pegjs@git://github.com/dmajda/pegjs.git',
+10 verbose parsed url   href: 'pegjs@git://github.com/dmajda/pegjs.git' }
+11 verbose cache add [ 'montag@git@bitbucket.org:kriskowal/montag.git', null ]
+12 verbose cache add name=undefined spec="montag@git@bitbucket.org:kriskowal/montag.git" args=["montag@git@bitbucket.org:kriskowal/montag.git",null]
+13 verbose parsed url { protocol: null,
+13 verbose parsed url   slashes: null,
+13 verbose parsed url   auth: null,
+13 verbose parsed url   host: null,
+13 verbose parsed url   port: null,
+13 verbose parsed url   hostname: null,
+13 verbose parsed url   hash: null,
+13 verbose parsed url   search: null,
+13 verbose parsed url   query: null,
+13 verbose parsed url   pathname: 'montag@git@bitbucket.org:kriskowal/montag.git',
+13 verbose parsed url   path: 'montag@git@bitbucket.org:kriskowal/montag.git',
+13 verbose parsed url   href: 'montag@git@bitbucket.org:kriskowal/montag.git' }
+14 verbose cache add [ 'mr@git://github.com/kriskowal/mr.git#strange-mood', null ]
+15 verbose cache add name=undefined spec="mr@git://github.com/kriskowal/mr.git#strange-mood" args=["mr@git://github.com/kriskowal/mr.git#strange-mood",null]
+16 verbose parsed url { protocol: null,
+16 verbose parsed url   slashes: null,
+16 verbose parsed url   auth: null,
+16 verbose parsed url   host: null,
+16 verbose parsed url   port: null,
+16 verbose parsed url   hostname: null,
+16 verbose parsed url   hash: '#strange-mood',
+16 verbose parsed url   search: null,
+16 verbose parsed url   query: null,
+16 verbose parsed url   pathname: 'mr@git://github.com/kriskowal/mr.git',
+16 verbose parsed url   path: 'mr@git://github.com/kriskowal/mr.git',
+16 verbose parsed url   href: 'mr@git://github.com/kriskowal/mr.git#strange-mood' }
+17 verbose cache add name="pegjs" spec="git://github.com/dmajda/pegjs.git" args=["pegjs","git://github.com/dmajda/pegjs.git"]
+18 verbose parsed url { protocol: 'git:',
+18 verbose parsed url   slashes: true,
+18 verbose parsed url   auth: null,
+18 verbose parsed url   host: 'github.com',
+18 verbose parsed url   port: null,
+18 verbose parsed url   hostname: 'github.com',
+18 verbose parsed url   hash: null,
+18 verbose parsed url   search: null,
+18 verbose parsed url   query: null,
+18 verbose parsed url   pathname: '/dmajda/pegjs.git',
+18 verbose parsed url   path: '/dmajda/pegjs.git',
+18 verbose parsed url   href: 'git://github.com/dmajda/pegjs.git' }
+19 verbose cache add name="montag" spec="git@bitbucket.org:kriskowal/montag.git" args=["montag","git@bitbucket.org:kriskowal/montag.git"]
+20 verbose parsed url { protocol: null,
+20 verbose parsed url   slashes: null,
+20 verbose parsed url   auth: null,
+20 verbose parsed url   host: null,
+20 verbose parsed url   port: null,
+20 verbose parsed url   hostname: null,
+20 verbose parsed url   hash: null,
+20 verbose parsed url   search: null,
+20 verbose parsed url   query: null,
+20 verbose parsed url   pathname: 'git@bitbucket.org:kriskowal/montag.git',
+20 verbose parsed url   path: 'git@bitbucket.org:kriskowal/montag.git',
+20 verbose parsed url   href: 'git@bitbucket.org:kriskowal/montag.git' }
+21 verbose addNamed [ 'montag', 'git@bitbucket.org:kriskowal/montag.git' ]
+22 verbose addNamed [ null, null ]
+23 verbose cache add name="mr" spec="git://github.com/kriskowal/mr.git#strange-mood" args=["mr","git://github.com/kriskowal/mr.git#strange-mood"]
+24 verbose parsed url { protocol: 'git:',
+24 verbose parsed url   slashes: true,
+24 verbose parsed url   auth: null,
+24 verbose parsed url   host: 'github.com',
+24 verbose parsed url   port: null,
+24 verbose parsed url   hostname: 'github.com',
+24 verbose parsed url   hash: '#strange-mood',
+24 verbose parsed url   search: null,
+24 verbose parsed url   query: null,
+24 verbose parsed url   pathname: '/kriskowal/mr.git',
+24 verbose parsed url   path: '/kriskowal/mr.git',
+24 verbose parsed url   href: 'git://github.com/kriskowal/mr.git#strange-mood' }
+25 silly lockFile bc6b603e-git-github-com-dmajda-pegjs-git git://github.com/dmajda/pegjs.git
+26 verbose lock git://github.com/dmajda/pegjs.git /Users/kris/.npm/bc6b603e-git-github-com-dmajda-pegjs-git.lock
+27 silly lockFile 3eba4f58-tbucket-org-kriskowal-montag-git montag@git@bitbucket.org:kriskowal/montag.git
+28 verbose lock montag@git@bitbucket.org:kriskowal/montag.git /Users/kris/.npm/3eba4f58-tbucket-org-kriskowal-montag-git.lock
+29 silly lockFile 7a904a2b-git-github-com-kriskowal-mr-git git://github.com/kriskowal/mr.git
+30 verbose lock git://github.com/kriskowal/mr.git /Users/kris/.npm/7a904a2b-git-github-com-kriskowal-mr-git.lock
+31 verbose addRemoteGit [ 'git://github.com/dmajda/pegjs.git', 'master' ]
+32 info addNameTag [ 'montag', 'git@bitbucket.org:kriskowal/montag.git' ]
+33 verbose addRemoteGit [ 'git://github.com/kriskowal/mr.git', 'strange-mood' ]
+34 verbose url raw montag
+35 verbose url resolving [ 'https://registry.npmjs.org/', './montag' ]
+36 verbose url resolved https://registry.npmjs.org/montag
+37 info trying registry request attempt 1 at 19:33:17
+38 http GET https://registry.npmjs.org/montag
+39 verbose git remote.origin.url git://github.com/dmajda/pegjs.git
+40 http 404 https://registry.npmjs.org/montag
+41 silly registry.get cb [ 404,
+41 silly registry.get   { date: 'Mon, 16 Jun 2014 02:33:13 GMT',
+41 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R14B04)',
+41 silly registry.get     'content-type': 'application/json',
+41 silly registry.get     'cache-control': 'max-age=0',
+41 silly registry.get     'content-length': '52',
+41 silly registry.get     'accept-ranges': 'bytes',
+41 silly registry.get     via: '1.1 varnish',
+41 silly registry.get     age: '0',
+41 silly registry.get     'x-served-by': 'cache-lax1429-LAX',
+41 silly registry.get     'x-cache': 'MISS',
+41 silly registry.get     'x-cache-hits': '0',
+41 silly registry.get     'x-timer': 'S1402885993.890061,VS0,VE48',
+41 silly registry.get     'keep-alive': 'timeout=10, max=50',
+41 silly registry.get     connection: 'Keep-Alive' } ]
+42 info maybeGithub Attempting git@bitbucket.org:kriskowal/montag.git from git://github.com/git@bitbucket.org:kriskowal/montag.git
+43 silly lockFile 5516d55d-tbucket-org-kriskowal-montag-git git://github.com/git@bitbucket.org:kriskowal/montag.git
+44 verbose lock git://github.com/git@bitbucket.org:kriskowal/montag.git /Users/kris/.npm/5516d55d-tbucket-org-kriskowal-montag-git.lock
+45 verbose addRemoteGit [ 'git://github.com/git@bitbucket.org:kriskowal/montag.git',
+45 verbose addRemoteGit   'master' ]
+46 verbose git clone git://github.com/git@bitbucket.org:kriskowal/montag.git Cloning into bare repository '/Users/kris/.npm/_git-remotes/git-github-com-git-bitbucket-org-kriskowal-montag-git-5516d55d'...
+46 verbose git clone git://github.com/git@bitbucket.org:kriskowal/montag.git fatal: remote error:
+46 verbose git clone git://github.com/git@bitbucket.org:kriskowal/montag.git   git@bitbucket.org:kriskowal/montag is not a valid repository name
+46 verbose git clone git://github.com/git@bitbucket.org:kriskowal/montag.git   Email support@github.com for help
+47 silly lockFile 5516d55d-tbucket-org-kriskowal-montag-git git://github.com/git@bitbucket.org:kriskowal/montag.git
+48 silly lockFile 5516d55d-tbucket-org-kriskowal-montag-git git://github.com/git@bitbucket.org:kriskowal/montag.git
+49 info maybeGithub Attempting git@bitbucket.org:kriskowal/montag.git from git+ssh://git@github.com:git@bitbucket.org:kriskowal/montag.git
+50 silly lockFile 53464a59-tbucket-org-kriskowal-montag-git git@github.com:git@bitbucket.org:kriskowal/montag.git
+51 verbose lock git@github.com:git@bitbucket.org:kriskowal/montag.git /Users/kris/.npm/53464a59-tbucket-org-kriskowal-montag-git.lock
+52 verbose addRemoteGit [ 'git@github.com:git@bitbucket.org:kriskowal/montag.git',
+52 verbose addRemoteGit   'master' ]
+53 verbose git fetch -a origin (git://github.com/dmajda/pegjs.git)
+54 verbose git rev-list -n1 master 5a2ca2abc77e61e726c025b31b686bec05ff8535
+55 verbose resolved git url git://github.com/dmajda/pegjs.git#5a2ca2abc77e61e726c025b31b686bec05ff8535
+56 verbose tar unpack /var/folders/s6/9w38yyk52_n77pbwl7l7n10m0000gn/T/npm-21030-GAJb74a_/1402885997938-0.14867960452102125/tmp.tgz
+57 silly lockFile 01a6600a-7938-0-14867960452102125-package tar:///var/folders/s6/9w38yyk52_n77pbwl7l7n10m0000gn/T/npm-21030-GAJb74a_/1402885997938-0.14867960452102125/package
+58 verbose lock tar:///var/folders/s6/9w38yyk52_n77pbwl7l7n10m0000gn/T/npm-21030-GAJb74a_/1402885997938-0.14867960452102125/package /Users/kris/.npm/01a6600a-7938-0-14867960452102125-package.lock
+59 silly lockFile 56595f2e-7938-0-14867960452102125-tmp-tgz tar:///var/folders/s6/9w38yyk52_n77pbwl7l7n10m0000gn/T/npm-21030-GAJb74a_/1402885997938-0.14867960452102125/tmp.tgz
+60 verbose lock tar:///var/folders/s6/9w38yyk52_n77pbwl7l7n10m0000gn/T/npm-21030-GAJb74a_/1402885997938-0.14867960452102125/tmp.tgz /Users/kris/.npm/56595f2e-7938-0-14867960452102125-tmp-tgz.lock
+61 silly gunzTarPerm modes [ '755', '644' ]
+62 silly gunzTarPerm extractEntry
+63 silly gunzTarPerm modified mode [ '', 509, 493 ]
+64 silly gunzTarPerm extractEntry .gitignore
+65 silly gunzTarPerm modified mode [ '.gitignore', 436, 420 ]
+66 silly gunzTarPerm extractEntry .jshintrc
+67 silly gunzTarPerm modified mode [ '.jshintrc', 436, 420 ]
+68 silly gunzTarPerm extractEntry .travis.yml
+69 silly gunzTarPerm modified mode [ '.travis.yml', 436, 420 ]
+70 silly gunzTarPerm extractEntry CHANGELOG.md
+71 silly gunzTarPerm modified mode [ 'CHANGELOG.md', 436, 420 ]
+72 silly gunzTarPerm extractEntry LICENSE
+73 silly gunzTarPerm modified mode [ 'LICENSE', 436, 420 ]
+74 silly gunzTarPerm extractEntry Makefile
+75 silly gunzTarPerm modified mode [ 'Makefile', 436, 420 ]
+76 silly gunzTarPerm extractEntry README.md
+77 silly gunzTarPerm modified mode [ 'README.md', 436, 420 ]
+78 silly gunzTarPerm extractEntry VERSION
+79 silly gunzTarPerm modified mode [ 'VERSION', 436, 420 ]
+80 silly gunzTarPerm extractEntry benchmark/
+81 silly gunzTarPerm modified mode [ 'benchmark/', 509, 493 ]
+82 silly gunzTarPerm extractEntry benchmark/README.md
+83 silly gunzTarPerm modified mode [ 'benchmark/README.md', 436, 420 ]
+84 silly gunzTarPerm extractEntry benchmark/benchmarks.js
+85 silly gunzTarPerm modified mode [ 'benchmark/benchmarks.js', 436, 420 ]
+86 silly gunzTarPerm extractEntry benchmark/css/
+87 silly gunzTarPerm modified mode [ 'benchmark/css/', 509, 493 ]
+88 silly gunzTarPerm extractEntry benchmark/css/960.gs/
+89 silly gunzTarPerm modified mode [ 'benchmark/css/960.gs/', 509, 493 ]
+90 silly gunzTarPerm extractEntry benchmark/css/960.gs/min/
+91 silly gunzTarPerm modified mode [ 'benchmark/css/960.gs/min/', 509, 493 ]
+92 silly gunzTarPerm extractEntry benchmark/css/960.gs/min/960.css
+93 silly gunzTarPerm modified mode [ 'benchmark/css/960.gs/min/960.css', 436, 420 ]
+94 silly gunzTarPerm extractEntry benchmark/css/960.gs/min/960_24_col.css
+95 silly gunzTarPerm modified mode [ 'benchmark/css/960.gs/min/960_24_col.css', 436, 420 ]
+96 silly gunzTarPerm extractEntry benchmark/css/960.gs/min/reset.css
+97 silly gunzTarPerm modified mode [ 'benchmark/css/960.gs/min/reset.css', 436, 420 ]
+98 silly gunzTarPerm extractEntry benchmark/css/960.gs/min/text.css
+99 silly gunzTarPerm modified mode [ 'benchmark/css/960.gs/min/text.css', 436, 420 ]
+100 silly gunzTarPerm extractEntry benchmark/css/960.gs/src/
+101 silly gunzTarPerm modified mode [ 'benchmark/css/960.gs/src/', 509, 493 ]
+102 silly gunzTarPerm extractEntry benchmark/css/960.gs/src/960.css
+103 silly gunzTarPerm modified mode [ 'benchmark/css/960.gs/src/960.css', 436, 420 ]
+104 silly gunzTarPerm extractEntry benchmark/css/960.gs/src/960_24_col.css
+105 silly gunzTarPerm modified mode [ 'benchmark/css/960.gs/src/960_24_col.css', 436, 420 ]
+106 silly gunzTarPerm extractEntry benchmark/css/960.gs/src/reset.css
+107 silly gunzTarPerm modified mode [ 'benchmark/css/960.gs/src/reset.css', 436, 420 ]
+108 silly gunzTarPerm extractEntry benchmark/css/960.gs/src/text.css
+109 silly gunzTarPerm modified mode [ 'benchmark/css/960.gs/src/text.css', 436, 420 ]
+110 silly gunzTarPerm extractEntry benchmark/css/blueprint/
+111 silly gunzTarPerm modified mode [ 'benchmark/css/blueprint/', 509, 493 ]
+112 silly gunzTarPerm extractEntry benchmark/css/blueprint/min/
+113 silly gunzTarPerm modified mode [ 'benchmark/css/blueprint/min/', 509, 493 ]
+114 silly gunzTarPerm extractEntry benchmark/css/blueprint/min/ie.css
+115 silly gunzTarPerm modified mode [ 'benchmark/css/blueprint/min/ie.css', 436, 420 ]
+116 silly gunzTarPerm extractEntry benchmark/css/blueprint/min/print.css
+117 silly gunzTarPerm modified mode [ 'benchmark/css/blueprint/min/print.css', 436, 420 ]
+118 silly gunzTarPerm extractEntry benchmark/css/blueprint/min/screen.css
+119 silly gunzTarPerm modified mode [ 'benchmark/css/blueprint/min/screen.css', 436, 420 ]
+120 silly gunzTarPerm extractEntry benchmark/css/blueprint/src/
+121 silly gunzTarPerm modified mode [ 'benchmark/css/blueprint/src/', 509, 493 ]
+122 silly gunzTarPerm extractEntry benchmark/css/blueprint/src/forms.css
+123 silly gunzTarPerm modified mode [ 'benchmark/css/blueprint/src/forms.css', 436, 420 ]
+124 silly gunzTarPerm extractEntry benchmark/css/blueprint/src/grid.css
+125 silly gunzTarPerm modified mode [ 'benchmark/css/blueprint/src/grid.css', 436, 420 ]
+126 silly gunzTarPerm extractEntry benchmark/css/blueprint/src/ie.css
+127 silly gunzTarPerm modified mode [ 'benchmark/css/blueprint/src/ie.css', 436, 420 ]
+128 silly gunzTarPerm extractEntry benchmark/css/blueprint/src/print.css
+129 silly gunzTarPerm modified mode [ 'benchmark/css/blueprint/src/print.css', 436, 420 ]
+130 silly gunzTarPerm extractEntry benchmark/css/blueprint/src/reset.css
+131 silly gunzTarPerm modified mode [ 'benchmark/css/blueprint/src/reset.css', 436, 420 ]
+132 silly gunzTarPerm extractEntry benchmark/css/blueprint/src/typography.css
+133 silly gunzTarPerm modified mode [ 'benchmark/css/blueprint/src/typography.css', 436, 420 ]
+134 silly gunzTarPerm extractEntry benchmark/index.css
+135 silly gunzTarPerm modified mode [ 'benchmark/index.css', 436, 420 ]
+136 silly gunzTarPerm extractEntry benchmark/index.html
+137 silly gunzTarPerm modified mode [ 'benchmark/index.html', 436, 420 ]
+138 silly gunzTarPerm extractEntry benchmark/index.js
+139 silly gunzTarPerm modified mode [ 'benchmark/index.js', 436, 420 ]
+140 silly gunzTarPerm extractEntry benchmark/json/
+141 silly gunzTarPerm modified mode [ 'benchmark/json/', 509, 493 ]
+142 silly gunzTarPerm extractEntry benchmark/json/example1.json
+143 silly gunzTarPerm modified mode [ 'benchmark/json/example1.json', 436, 420 ]
+144 silly gunzTarPerm extractEntry benchmark/json/example2.json
+145 silly gunzTarPerm modified mode [ 'benchmark/json/example2.json', 436, 420 ]
+146 silly gunzTarPerm extractEntry benchmark/json/example3.json
+147 silly gunzTarPerm modified mode [ 'benchmark/json/example3.json', 436, 420 ]
+148 silly gunzTarPerm extractEntry benchmark/json/example4.json
+149 silly gunzTarPerm modified mode [ 'benchmark/json/example4.json', 436, 420 ]
+150 silly gunzTarPerm extractEntry benchmark/json/example5.json
+151 silly gunzTarPerm modified mode [ 'benchmark/json/example5.json', 436, 420 ]
+152 silly gunzTarPerm extractEntry benchmark/run
+153 silly gunzTarPerm modified mode [ 'benchmark/run', 509, 493 ]
+154 silly gunzTarPerm extractEntry benchmark/runner.js
+155 silly gunzTarPerm modified mode [ 'benchmark/runner.js', 436, 420 ]
+156 silly gunzTarPerm extractEntry benchmark/vendor/
+157 silly gunzTarPerm modified mode [ 'benchmark/vendor/', 509, 493 ]
+158 silly gunzTarPerm extractEntry benchmark/vendor/jquery.scrollto/
+159 silly gunzTarPerm modified mode [ 'benchmark/vendor/jquery.scrollto/', 509, 493 ]
+160 silly gunzTarPerm extractEntry benchmark/vendor/jquery.scrollto/LICENSE
+161 silly gunzTarPerm modified mode [ 'benchmark/vendor/jquery.scrollto/LICENSE', 436, 420 ]
+162 silly gunzTarPerm extractEntry benchmark/vendor/jquery.scrollto/jquery.scrollTo.js
+163 silly gunzTarPerm modified mode [ 'benchmark/vendor/jquery.scrollto/jquery.scrollTo.js',
+163 silly gunzTarPerm   436,
+163 silly gunzTarPerm   420 ]
+164 silly gunzTarPerm extractEntry benchmark/vendor/jquery/
+165 silly gunzTarPerm modified mode [ 'benchmark/vendor/jquery/', 509, 493 ]
+166 silly gunzTarPerm extractEntry benchmark/vendor/jquery/MIT-LICENSE.txt
+167 silly gunzTarPerm modified mode [ 'benchmark/vendor/jquery/MIT-LICENSE.txt', 436, 420 ]
+168 silly gunzTarPerm extractEntry benchmark/vendor/jquery/jquery.js
+169 silly gunzTarPerm modified mode [ 'benchmark/vendor/jquery/jquery.js', 436, 420 ]
+170 silly gunzTarPerm extractEntry bin/
+171 silly gunzTarPerm modified mode [ 'bin/', 509, 493 ]
+172 silly gunzTarPerm extractEntry bin/pegjs
+173 silly gunzTarPerm modified mode [ 'bin/pegjs', 509, 493 ]
+174 silly gunzTarPerm extractEntry examples/
+175 silly gunzTarPerm modified mode [ 'examples/', 509, 493 ]
+176 silly gunzTarPerm extractEntry examples/arithmetics.pegjs
+177 silly gunzTarPerm modified mode [ 'examples/arithmetics.pegjs', 436, 420 ]
+178 silly gunzTarPerm extractEntry examples/css.pegjs
+179 silly gunzTarPerm modified mode [ 'examples/css.pegjs', 436, 420 ]
+180 silly gunzTarPerm extractEntry examples/javascript.pegjs
+181 silly gunzTarPerm modified mode [ 'examples/javascript.pegjs', 436, 420 ]
+182 silly gunzTarPerm extractEntry examples/json.pegjs
+183 silly gunzTarPerm modified mode [ 'examples/json.pegjs', 436, 420 ]
+184 silly gunzTarPerm extractEntry lib/
+185 silly gunzTarPerm modified mode [ 'lib/', 509, 493 ]
+186 silly gunzTarPerm extractEntry lib/compiler.js
+187 silly gunzTarPerm modified mode [ 'lib/compiler.js', 436, 420 ]
+188 silly gunzTarPerm extractEntry lib/compiler/
+189 silly gunzTarPerm modified mode [ 'lib/compiler/', 509, 493 ]
+190 silly gunzTarPerm extractEntry lib/compiler/asts.js
+191 silly gunzTarPerm modified mode [ 'lib/compiler/asts.js', 436, 420 ]
+192 silly gunzTarPerm extractEntry lib/compiler/javascript.js
+193 silly gunzTarPerm modified mode [ 'lib/compiler/javascript.js', 436, 420 ]
+194 silly gunzTarPerm extractEntry lib/compiler/opcodes.js
+195 silly gunzTarPerm modified mode [ 'lib/compiler/opcodes.js', 436, 420 ]
+196 silly gunzTarPerm extractEntry lib/compiler/passes/
+197 silly gunzTarPerm modified mode [ 'lib/compiler/passes/', 509, 493 ]
+198 silly gunzTarPerm extractEntry lib/compiler/passes/generate-bytecode.js
+199 silly gunzTarPerm modified mode [ 'lib/compiler/passes/generate-bytecode.js', 436, 420 ]
+200 silly gunzTarPerm extractEntry lib/compiler/passes/generate-javascript.js
+201 silly gunzTarPerm modified mode [ 'lib/compiler/passes/generate-javascript.js', 436, 420 ]
+202 silly gunzTarPerm extractEntry lib/compiler/passes/remove-proxy-rules.js
+203 silly gunzTarPerm modified mode [ 'lib/compiler/passes/remove-proxy-rules.js', 436, 420 ]
+204 silly gunzTarPerm extractEntry lib/compiler/passes/report-left-recursion.js
+205 silly gunzTarPerm modified mode [ 'lib/compiler/passes/report-left-recursion.js', 436, 420 ]
+206 silly gunzTarPerm extractEntry lib/compiler/passes/report-missing-rules.js
+207 silly gunzTarPerm modified mode [ 'lib/compiler/passes/report-missing-rules.js', 436, 420 ]
+208 silly gunzTarPerm extractEntry lib/compiler/visitor.js
+209 silly gunzTarPerm modified mode [ 'lib/compiler/visitor.js', 436, 420 ]
+210 silly gunzTarPerm extractEntry lib/grammar-error.js
+211 silly gunzTarPerm modified mode [ 'lib/grammar-error.js', 436, 420 ]
+212 silly gunzTarPerm extractEntry lib/parser.js
+213 silly gunzTarPerm modified mode [ 'lib/parser.js', 436, 420 ]
+214 silly gunzTarPerm extractEntry lib/peg.js
+215 silly gunzTarPerm modified mode [ 'lib/peg.js', 436, 420 ]
+216 silly gunzTarPerm extractEntry lib/utils/
+217 silly gunzTarPerm modified mode [ 'lib/utils/', 509, 493 ]
+218 silly gunzTarPerm extractEntry lib/utils/arrays.js
+219 silly gunzTarPerm modified mode [ 'lib/utils/arrays.js', 436, 420 ]
+220 silly gunzTarPerm extractEntry lib/utils/classes.js
+221 silly gunzTarPerm modified mode [ 'lib/utils/classes.js', 436, 420 ]
+222 silly gunzTarPerm extractEntry lib/utils/objects.js
+223 silly gunzTarPerm modified mode [ 'lib/utils/objects.js', 436, 420 ]
+224 silly gunzTarPerm extractEntry package.json
+225 silly gunzTarPerm modified mode [ 'package.json', 436, 420 ]
+226 silly gunzTarPerm extractEntry spec/
+227 silly gunzTarPerm modified mode [ 'spec/', 509, 493 ]
+228 silly gunzTarPerm extractEntry spec/README.md
+229 silly gunzTarPerm modified mode [ 'spec/README.md', 436, 420 ]
+230 silly gunzTarPerm extractEntry spec/api/
+231 silly gunzTarPerm modified mode [ 'spec/api/', 509, 493 ]
+232 silly gunzTarPerm extractEntry spec/api/generated-parser-api.spec.js
+233 silly gunzTarPerm modified mode [ 'spec/api/generated-parser-api.spec.js', 436, 420 ]
+234 silly gunzTarPerm extractEntry spec/api/generated-parser-behavior.spec.js
+235 silly gunzTarPerm modified mode [ 'spec/api/generated-parser-behavior.spec.js', 436, 420 ]
+236 silly gunzTarPerm extractEntry spec/api/pegjs-api.spec.js
+237 silly gunzTarPerm modified mode [ 'spec/api/pegjs-api.spec.js', 436, 420 ]
+238 silly gunzTarPerm extractEntry spec/api/plugin-api.spec.js
+239 silly gunzTarPerm modified mode [ 'spec/api/plugin-api.spec.js', 436, 420 ]
+240 silly gunzTarPerm extractEntry spec/helpers.js
+241 silly gunzTarPerm modified mode [ 'spec/helpers.js', 436, 420 ]
+242 silly gunzTarPerm extractEntry spec/index.html
+243 silly gunzTarPerm modified mode [ 'spec/index.html', 436, 420 ]
+244 silly gunzTarPerm extractEntry spec/unit/
+245 silly gunzTarPerm modified mode [ 'spec/unit/', 509, 493 ]
+246 silly gunzTarPerm extractEntry spec/unit/compiler/
+247 silly gunzTarPerm modified mode [ 'spec/unit/compiler/', 509, 493 ]
+248 silly gunzTarPerm extractEntry spec/unit/compiler/passes/
+249 silly gunzTarPerm modified mode [ 'spec/unit/compiler/passes/', 509, 493 ]
+250 silly gunzTarPerm extractEntry spec/unit/compiler/passes/generate-bytecode.spec.js
+251 silly gunzTarPerm modified mode [ 'spec/unit/compiler/passes/generate-bytecode.spec.js',
+251 silly gunzTarPerm   436,
+251 silly gunzTarPerm   420 ]
+252 silly gunzTarPerm extractEntry spec/unit/compiler/passes/helpers.js
+253 silly gunzTarPerm modified mode [ 'spec/unit/compiler/passes/helpers.js', 436, 420 ]
+254 silly gunzTarPerm extractEntry spec/unit/compiler/passes/remove-proxy-rules.spec.js
+255 silly gunzTarPerm modified mode [ 'spec/unit/compiler/passes/remove-proxy-rules.spec.js',
+255 silly gunzTarPerm   436,
+255 silly gunzTarPerm   420 ]
+256 silly gunzTarPerm extractEntry spec/unit/compiler/passes/report-left-recursion.spec.js
+257 silly gunzTarPerm modified mode [ 'spec/unit/compiler/passes/report-left-recursion.spec.js',
+257 silly gunzTarPerm   436,
+257 silly gunzTarPerm   420 ]
+258 silly gunzTarPerm extractEntry spec/unit/compiler/passes/report-missing-rules.spec.js
+259 silly gunzTarPerm modified mode [ 'spec/unit/compiler/passes/report-missing-rules.spec.js',
+259 silly gunzTarPerm   436,
+259 silly gunzTarPerm   420 ]
+260 silly gunzTarPerm extractEntry spec/unit/parser.spec.js
+261 silly gunzTarPerm modified mode [ 'spec/unit/parser.spec.js', 436, 420 ]
+262 silly gunzTarPerm extractEntry spec/vendor/
+263 silly gunzTarPerm modified mode [ 'spec/vendor/', 509, 493 ]
+264 silly gunzTarPerm extractEntry spec/vendor/jasmine/
+265 silly gunzTarPerm modified mode [ 'spec/vendor/jasmine/', 509, 493 ]
+266 silly gunzTarPerm extractEntry spec/vendor/jasmine/MIT.LICENSE
+267 silly gunzTarPerm modified mode [ 'spec/vendor/jasmine/MIT.LICENSE', 436, 420 ]
+268 silly gunzTarPerm extractEntry spec/vendor/jasmine/jasmine-html.js
+269 silly gunzTarPerm modified mode [ 'spec/vendor/jasmine/jasmine-html.js', 436, 420 ]
+270 silly gunzTarPerm extractEntry spec/vendor/jasmine/jasmine.css
+271 silly gunzTarPerm modified mode [ 'spec/vendor/jasmine/jasmine.css', 436, 420 ]
+272 silly gunzTarPerm extractEntry spec/vendor/jasmine/jasmine.js
+273 silly gunzTarPerm modified mode [ 'spec/vendor/jasmine/jasmine.js', 436, 420 ]
+274 silly gunzTarPerm extractEntry src/
+275 silly gunzTarPerm modified mode [ 'src/', 509, 493 ]
+276 silly gunzTarPerm extractEntry src/parser.pegjs
+277 silly gunzTarPerm modified mode [ 'src/parser.pegjs', 436, 420 ]
+278 silly gunzTarPerm extractEntry tools/
+279 silly gunzTarPerm modified mode [ 'tools/', 509, 493 ]
+280 silly gunzTarPerm extractEntry tools/impact
+281 silly gunzTarPerm modified mode [ 'tools/impact', 509, 493 ]
+282 silly lockFile 01a6600a-7938-0-14867960452102125-package tar:///var/folders/s6/9w38yyk52_n77pbwl7l7n10m0000gn/T/npm-21030-GAJb74a_/1402885997938-0.14867960452102125/package
+283 silly lockFile 01a6600a-7938-0-14867960452102125-package tar:///var/folders/s6/9w38yyk52_n77pbwl7l7n10m0000gn/T/npm-21030-GAJb74a_/1402885997938-0.14867960452102125/package
+284 silly lockFile 56595f2e-7938-0-14867960452102125-tmp-tgz tar:///var/folders/s6/9w38yyk52_n77pbwl7l7n10m0000gn/T/npm-21030-GAJb74a_/1402885997938-0.14867960452102125/tmp.tgz
+285 silly lockFile 56595f2e-7938-0-14867960452102125-tmp-tgz tar:///var/folders/s6/9w38yyk52_n77pbwl7l7n10m0000gn/T/npm-21030-GAJb74a_/1402885997938-0.14867960452102125/tmp.tgz
+286 verbose tar pack [ '/Users/kris/.npm/pegjs/0.8.0/package.tgz',
+286 verbose tar pack   '/var/folders/s6/9w38yyk52_n77pbwl7l7n10m0000gn/T/npm-21030-GAJb74a_/1402885997938-0.14867960452102125/package' ]
+287 verbose tarball /Users/kris/.npm/pegjs/0.8.0/package.tgz
+288 verbose folder /var/folders/s6/9w38yyk52_n77pbwl7l7n10m0000gn/T/npm-21030-GAJb74a_/1402885997938-0.14867960452102125/package
+289 silly lockFile 01a6600a-7938-0-14867960452102125-package tar:///var/folders/s6/9w38yyk52_n77pbwl7l7n10m0000gn/T/npm-21030-GAJb74a_/1402885997938-0.14867960452102125/package
+290 verbose lock tar:///var/folders/s6/9w38yyk52_n77pbwl7l7n10m0000gn/T/npm-21030-GAJb74a_/1402885997938-0.14867960452102125/package /Users/kris/.npm/01a6600a-7938-0-14867960452102125-package.lock
+291 silly lockFile c4cdaf84-kris-npm-pegjs-0-8-0-package-tgz tar:///Users/kris/.npm/pegjs/0.8.0/package.tgz
+292 verbose lock tar:///Users/kris/.npm/pegjs/0.8.0/package.tgz /Users/kris/.npm/c4cdaf84-kris-npm-pegjs-0-8-0-package-tgz.lock
+293 silly lockFile 01a6600a-7938-0-14867960452102125-package tar:///var/folders/s6/9w38yyk52_n77pbwl7l7n10m0000gn/T/npm-21030-GAJb74a_/1402885997938-0.14867960452102125/package
+294 silly lockFile 01a6600a-7938-0-14867960452102125-package tar:///var/folders/s6/9w38yyk52_n77pbwl7l7n10m0000gn/T/npm-21030-GAJb74a_/1402885997938-0.14867960452102125/package
+295 silly lockFile c4cdaf84-kris-npm-pegjs-0-8-0-package-tgz tar:///Users/kris/.npm/pegjs/0.8.0/package.tgz
+296 silly lockFile c4cdaf84-kris-npm-pegjs-0-8-0-package-tgz tar:///Users/kris/.npm/pegjs/0.8.0/package.tgz
+297 silly lockFile a0291e07-ers-kris-npm-pegjs-0-8-0-package /Users/kris/.npm/pegjs/0.8.0/package
+298 verbose lock /Users/kris/.npm/pegjs/0.8.0/package /Users/kris/.npm/a0291e07-ers-kris-npm-pegjs-0-8-0-package.lock
+299 silly lockFile a0291e07-ers-kris-npm-pegjs-0-8-0-package /Users/kris/.npm/pegjs/0.8.0/package
+300 silly lockFile a0291e07-ers-kris-npm-pegjs-0-8-0-package /Users/kris/.npm/pegjs/0.8.0/package
+301 verbose tar unpack /Users/kris/.npm/pegjs/0.8.0/package.tgz
+302 silly lockFile c3e7065b-ers-kris-npm-pegjs-0-8-0-package tar:///Users/kris/.npm/pegjs/0.8.0/package
+303 verbose lock tar:///Users/kris/.npm/pegjs/0.8.0/package /Users/kris/.npm/c3e7065b-ers-kris-npm-pegjs-0-8-0-package.lock
+304 silly lockFile c4cdaf84-kris-npm-pegjs-0-8-0-package-tgz tar:///Users/kris/.npm/pegjs/0.8.0/package.tgz
+305 verbose lock tar:///Users/kris/.npm/pegjs/0.8.0/package.tgz /Users/kris/.npm/c4cdaf84-kris-npm-pegjs-0-8-0-package-tgz.lock
+306 silly gunzTarPerm modes [ '755', '644' ]
+307 silly gunzTarPerm extractEntry package.json
+308 silly gunzTarPerm extractEntry README.md
+309 silly gunzTarPerm extractEntry LICENSE
+310 silly gunzTarPerm extractEntry CHANGELOG.md
+311 silly gunzTarPerm extractEntry VERSION
+312 silly gunzTarPerm extractEntry bin/pegjs
+313 silly gunzTarPerm extractEntry examples/arithmetics.pegjs
+314 silly gunzTarPerm extractEntry examples/css.pegjs
+315 silly gunzTarPerm extractEntry examples/javascript.pegjs
+316 silly gunzTarPerm extractEntry examples/json.pegjs
+317 silly gunzTarPerm extractEntry lib/compiler.js
+318 silly gunzTarPerm extractEntry lib/grammar-error.js
+319 silly gunzTarPerm extractEntry lib/parser.js
+320 silly gunzTarPerm extractEntry lib/peg.js
+321 silly gunzTarPerm extractEntry lib/compiler/asts.js
+322 silly gunzTarPerm extractEntry lib/compiler/javascript.js
+323 silly gunzTarPerm extractEntry lib/compiler/opcodes.js
+324 silly gunzTarPerm extractEntry lib/compiler/visitor.js
+325 silly gunzTarPerm extractEntry lib/compiler/passes/generate-bytecode.js
+326 silly gunzTarPerm extractEntry lib/compiler/passes/generate-javascript.js
+327 silly gunzTarPerm extractEntry lib/compiler/passes/remove-proxy-rules.js
+328 silly gunzTarPerm extractEntry lib/compiler/passes/report-left-recursion.js
+329 silly gunzTarPerm extractEntry lib/compiler/passes/report-missing-rules.js
+330 silly gunzTarPerm extractEntry lib/utils/arrays.js
+331 silly gunzTarPerm extractEntry lib/utils/classes.js
+332 silly gunzTarPerm extractEntry lib/utils/objects.js
+333 silly lockFile c3e7065b-ers-kris-npm-pegjs-0-8-0-package tar:///Users/kris/.npm/pegjs/0.8.0/package
+334 silly lockFile c3e7065b-ers-kris-npm-pegjs-0-8-0-package tar:///Users/kris/.npm/pegjs/0.8.0/package
+335 silly lockFile c4cdaf84-kris-npm-pegjs-0-8-0-package-tgz tar:///Users/kris/.npm/pegjs/0.8.0/package.tgz
+336 silly lockFile c4cdaf84-kris-npm-pegjs-0-8-0-package-tgz tar:///Users/kris/.npm/pegjs/0.8.0/package.tgz
+337 verbose chmod /Users/kris/.npm/pegjs/0.8.0/package.tgz 644
+338 verbose chown /Users/kris/.npm/pegjs/0.8.0/package.tgz [ 501, 80 ]
+339 silly lockFile bc6b603e-git-github-com-dmajda-pegjs-git git://github.com/dmajda/pegjs.git
+340 silly lockFile bc6b603e-git-github-com-dmajda-pegjs-git git://github.com/dmajda/pegjs.git
+341 verbose git clone git@github.com:git@bitbucket.org:kriskowal/montag.git Cloning into bare repository '/Users/kris/.npm/_git-remotes/git-github-com-git-bitbucket-org-kriskowal-montag-git-53464a59'...
+341 verbose git clone git@github.com:git@bitbucket.org:kriskowal/montag.git fatal: remote error:
+341 verbose git clone git@github.com:git@bitbucket.org:kriskowal/montag.git    is not a valid repository name
+341 verbose git clone git@github.com:git@bitbucket.org:kriskowal/montag.git   Email support@github.com for help
+342 silly lockFile 53464a59-tbucket-org-kriskowal-montag-git git@github.com:git@bitbucket.org:kriskowal/montag.git
+343 silly lockFile 53464a59-tbucket-org-kriskowal-montag-git git@github.com:git@bitbucket.org:kriskowal/montag.git
+344 silly lockFile 3eba4f58-tbucket-org-kriskowal-montag-git montag@git@bitbucket.org:kriskowal/montag.git
+345 silly lockFile 3eba4f58-tbucket-org-kriskowal-montag-git montag@git@bitbucket.org:kriskowal/montag.git
+346 error 404 'montag' is not in the npm registry.
+346 error 404 You should bug the author to publish it
+346 error 404 It was specified as a dependency of 'delf'
+346 error 404
+346 error 404 Note that you can also install from a
+346 error 404 tarball, folder, or http url, or git url.
+347 error System Darwin 13.1.0
+348 error command "node" "/usr/local/bin/npm" "install"
+349 error cwd /Users/kris/delf
+350 error node -v v0.10.26
+351 error npm -v 1.4.3
+352 error code E404
+353 verbose exit [ 1, true ]

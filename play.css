@@ -1,0 +1,17 @@
+
+* { box-sizing: border-box }
+
+body {
+    font-family: Georgia, Times, Times New Roman, serif;
+}
+
+#deadcenter {
+    position: absolute;
+    visibility: hidden;
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+

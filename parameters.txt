@@ -1,0 +1,7 @@
+
+text: $default
+select: (option | optgroup[name](option*))*
+promise[for]: fulfilled? rejected? pending?
+switch: case[name]*
+for: body
+

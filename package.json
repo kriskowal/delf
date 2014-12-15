@@ -14,8 +14,10 @@
   },
   "dependencies": {
     "collections": "^2.0.1",
+    "dimensions": "^1.0.0",
     "domenic": "0.0.0",
     "mr": "^2.0.4",
+    "ndim": "0.0.0",
     "q": "^2.0.2",
     "setimmediate": "^1.0.2"
   },

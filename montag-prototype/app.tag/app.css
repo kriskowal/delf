@@ -1,0 +1,31 @@
+
+body {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.panel {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.panel > div {
+    padding: 30px;
+    max-width: 100%;
+}
+
+.dice {
+    display: flex;
+    flex-flow: row;
+}
+

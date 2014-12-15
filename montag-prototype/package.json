@@ -1,0 +1,15 @@
+{
+    "name": "delf",
+    "version": "0.0.0",
+    "private": true,
+    "dependencies": {
+        "montag": "git@bitbucket.org:kriskowal/montag.git",
+        "mr": "git://github.com/kriskowal/mr.git#strange-mood"
+    },
+    "devDependencies": {
+        "pegjs": "git://github.com/dmajda/pegjs.git"
+    },
+    "scripts": {
+        "build-dice-parser": "pegjs --allowed-start-rules dice dice.tag/dice-parser.pegjs"
+    }
+}

@@ -1,0 +1,15 @@
+
+dice <- @dice;
+
+@dice {
+    expression <- @expression.value;
+}
+
+@value {
+    value <- @dice.value;
+}
+
+@button {
+    handle press @this;
+}
+

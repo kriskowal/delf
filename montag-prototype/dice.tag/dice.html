@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="component" id="../die.tag">
+        <link rel="component" id="../coin.tag">
+        <link rel="component" id="montag/repetition.tag">
+        <link rel="component" id="montag/switch.tag">
+        <link rel="bindings" id="./dice.frb">
+    </head>
+    <body>
+        <repetition component="dice">
+            <repetition component="count">
+                <switch component="type">
+                    <die>
+                        <die component="die"></die>
+                    </die>
+                    <coin>
+                        <coin component="die"></coin>
+                    </coin>
+                </switch>
+            </repetition>
+        </repetition>
+    </body>
+</html>

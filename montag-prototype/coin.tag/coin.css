@@ -1,0 +1,50 @@
+
+.coin-container {
+    height: 50px;
+    width: 50px;
+}
+
+.coin {
+    position: relative;
+    -webkit-transform-style: preserve-3d;
+}
+
+.coin-flipper {
+    height: 50px;
+    width: 50px;
+    -webkit-transform-style: preserve-3d;
+}
+
+.coin-face-head, .coin-face-tail, .coin-face-head-stamp, .coin-face-tail-stamp {
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    -webkit-backface-visibility: hidden;
+    font-size: 75px;
+    line-height: 60%;
+    text-align: center;
+}
+
+.coin-face-head-stamp, .coin-face-tail-stamp {
+    font-size: 25px;
+    line-height: 170%;
+    text-align: center;
+}
+
+.coin-face-tail {
+    -webkit-transform: rotateX(180deg) translateZ(5px);
+}
+
+.coin-face-head {
+    -webkit-transform: rotateX(0deg) translateZ(5px);
+}
+
+.coin-face-tail-stamp {
+    -webkit-transform: rotateX(180deg) translateZ(6px);
+}
+
+.coin-face-head-stamp {
+    -webkit-transform: rotateX(0deg) translateZ(6px);
+    color: white;
+}
+

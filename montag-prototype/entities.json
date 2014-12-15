@@ -1,0 +1,588 @@
+{
+    "skeleton": {
+        "glyph": "☠",
+        "weapon": "dagger",
+        "shield": "buckler"
+    },
+    "snowman": {
+        "glyph": "☃",
+        "weapon": "wind",
+        "shield": "frost"
+    },
+    "beholder": {
+        "glyph": "ꙩ",
+        "stunnedGlyph": "Ꙩ"
+    },
+    "double beholder": {
+        "glyph": "ꙭ",
+        "stunnedGlyph": "Ꙭ"
+    },
+    "old man": {
+        "glyph": "༕"
+    },
+    "happy head": {
+        "glyph": "☺"
+    },
+    "sad head": {
+        "glyph": "☹"
+    },
+    "ninja": {
+        "glyph": "⚉"
+    },
+    "bull": {
+        "glyph": "♉"
+    },
+    "ram": {
+        "glyph": "♈"
+    },
+    "crab": {
+        "glyph": "♋"
+    },
+    "lion": {
+        "glyph": "♌"
+    },
+    "scorpion": {
+        "glyph": "♏"
+    },
+    "archer": {
+        "glyph": "♐"
+    },
+    "mergoat": {
+        "glyph": "♑"
+    },
+    "troll": {
+        "glyph": "♂",
+        "weapon": "bow"
+    },
+    "two-headed troll": {
+        "glyph": "⚣",
+        "weapon": "double bow"
+    },
+    "half troll": {
+        "glyph": "⚦"
+    },
+    "ogre": {
+        "glyph": "♀"
+    },
+    "two-headed ogre": {
+        "glyph": "⚢"
+    },
+    "trollgre": {
+        "glyph": "⚥"
+    },
+    "two-headed trollgre": {
+        "glyph": "⚤"
+    },
+    "dwarf": {
+        "glyph": "♁"
+    },
+    "troll-dwarf": {
+        "glyph": "⚨"
+    },
+    "dwarf-troll": {
+        "glyph": "⚩"
+    },
+    "minotaur": {
+        "glyph": "☿"
+    },
+    "snake": {
+        "glyph": "≀"
+    },
+    "great snake": {
+        "glyph": "∿"
+    },
+    "half snake": {
+        "glyph": "≁"
+    },
+    "salamander": {
+        "glyph": "≃"
+    },
+    "dragon": {
+        "glyph": "∫"
+    },
+    "double dragon": {
+        "glyph": "∬"
+    },
+    "treble dragon": {
+        "glyph": "∭"
+    },
+    "dragon king": {
+        "glyph": "⨌"
+    },
+    "dragon of beholding": {
+        "glyph": "⨕"
+    },
+    "ring wyrm": {
+        "glyph": "∮"
+    },
+    "box wyrm": {
+        "glyph": "⨖"
+    },
+    "terrible lizard": {
+        "glyph": "⨘"
+    },
+    "bug": {
+        "glyph": "⟗"
+    },
+    "bird": {
+        "glyph": "⧴",
+        "transform": "rotate(90deg)"
+    },
+    "tripod": {
+        "glyph": "⫚"
+    },
+    "tadpole": {
+        "glyph": "⧜"
+    },
+    "frog": {
+        "glyph": "⧝"
+    },
+    "aligator": {
+        "glyph": "⧞"
+    },
+    "postman": {
+        "glyph": "〠"
+    },
+    "duck": {
+        "glyph": "∝"
+    },
+    "ghost": {
+        "glyph": " "
+    },
+    "zalgo": {
+        "glyph": ""
+    },
+    "health potion": {
+        "type": "quaffable",
+        "effect": "health",
+        "health": "1",
+        "glyph": "✚",
+        "color": "red"
+    },
+    "mana potion": {
+        "type": "quaffable",
+        "effect": "mana",
+        "mana": "1",
+        "glyph": "✚",
+        "color": "blue"
+    },
+    "eight petal flower": {
+        "type": "shield",
+        "glyph": "❁"
+    },
+    "crossed buckler": {
+        "glyph": "⊗"
+    },
+    "banded buckler": {
+        "glyph": "◎"
+    },
+    "blessèd buckler": {
+        "glyph": "⊕"
+    },
+    "cross-banded buckler": {
+        "type": "shield",
+        "glyph": "⨷"
+    },
+    "stud buckler": {
+        "glyph": "◉"
+    },
+    "star buckler": {
+        "glyph": "⊛"
+    },
+    "ring buckler": {
+        "glyph": "⊚"
+    },
+    "square buckler": {
+        "glyph": "⊡"
+    },
+    "heavy crossed square buckler": {
+        "glyph": "⊠"
+    },
+    "maul": {
+        "glyph": "⊺"
+    },
+    "sceptre": {
+        "glyph": "⫯"
+    },
+    "wand": {
+        "glyph": "⟢"
+    },
+    "staff": {
+        "glyph": "⎮"
+    },
+    "quarter staff": {
+        "glyph": "∤"
+    },
+    "spear": {
+        "glyph": "⨡"
+    },
+    "crook": {
+        "glyph": "⌠"
+    },
+    "blessèd angle shield": {
+        "glyph": "⨹",
+        "transform": "rotate(180deg) translateY(-50px)"
+    },
+    "crossed angle shield": {
+        "glyph": "⨻",
+        "transform": "rotate(180deg) translateY(-50px)"
+    },
+    "wicker shield": {
+        "glyph": "⩩",
+        "gransform": "translateY(50px)"
+    },
+    "nunchucks": {
+        "glyph": "⪤"
+    },
+    "fireball": {
+        "glyph": "✪",
+        "type": "missile",
+        "transform": "translateY(50px)"
+    },
+    "solarflare": {
+        "glyph": "❂",
+        "type": "missile",
+        "transform": "translateY(50px)"
+    },
+    "tack": {
+        "type": "trap",
+        "glyph": "❉"
+    },
+    "club": {
+        "type": "weapon",
+        "glyph": "♣"
+    },
+    "quartered club": {
+        "type" : "weapon",
+        "glyph": "✥"
+    },
+    "caltrop": {
+        "type": "trap",
+        "glyph": "✣"
+    },
+    "shield": {
+        "glyph": "☗",
+        "transform": "rotate(180deg)"
+    },
+    "ankh": {
+        "name": "ankh",
+        "glyph": "☥"
+    },
+    "dagger": {
+        "glyph": "†"
+    },
+    "double dagger": {
+        "glyph": "‡"
+    },
+    "double swords": {
+        "glyph": "⚔"
+    },
+    "hammer and pick": {
+        "glyph": "⚒"
+    },
+    "hammer and sickle": {
+        "glyph": "☭"
+    },
+    "trident": {
+        "glyph": "♆"
+    },
+    "spade": {
+        "glyph": "♠"
+    },
+    "caduceus": {
+        "glyph": "☤"
+    },
+    "staff of Hermes": {
+        "glyph": "⚚",
+        "transform": "translateY(50px)"
+    },
+    "staff of Aesculapius": {
+        "glyph": "⚕",
+        "transform": "translateY(30px)"
+    },
+    "arrow": {
+        "glyph": "➳"
+    },
+    "short bow": {
+        "glyph": "❩"
+    },
+    "bow": {
+        "glyph": ")"
+    },
+    "crossbow": {
+        "glyph": "⦔"
+    },
+    "double bow": {
+        "glyph": "⸩"
+    },
+    "long bow": {
+        "glyph": "〕"
+    },
+    "strong bow": {
+        "glyph": "⦄"
+    },
+    "strong double bow": {
+        "glyph": "〙"
+    },
+    "frost": {
+        "glyph": "❄"
+    },
+    "compass": {
+        "glyph": "∢",
+        "transform": "rotate(90deg)"
+    },
+    "piston": {
+        "glyph": "⧯"
+    },
+    "spring": {
+        "glyph": "⧰"
+    },
+    "pump": {
+        "glyph": "⧲"
+    },
+    "chain": {
+        "glyph": "⫘"
+    },
+    "carrot": {
+        "type": "food",
+        "effect": "health",
+        "health": "1d6",
+        "glyph": "ˆ"
+    },
+    "nut": {
+        "type": "food",
+        "glyph": "–"
+    },
+    "mutton": {
+        "type": "food",
+        "glyph": "—"
+    },
+    "vessel": {
+        "type": "fluid container",
+        "capacity": "6",
+        "glyph": "♒"
+    },
+    "fish": {
+        "type": "food",
+        "glyph": "♓"
+    },
+    "marked stone": {
+        "glyph": "⩀"
+    },
+    "sharp": {
+        "type": "effect",
+        "glyph": "♯"
+    },
+    "double sharp": {
+        "type": "effect",
+        "glyph": "𝄪"
+    },
+    "blunt": {
+        "type": "effect",
+        "glyph": "♭"
+    },
+    "double blunt": {
+        "type": "effect",
+        "glyph": "𝄫"
+    },
+    "radiance": {
+        "type": "effect",
+        "glyph": "☢"
+    },
+    "poison": {
+        "type": "effect",
+        "glyph": "☣"
+    },
+    "charged bolt": {
+        "type": "missile",
+        "glyph": "⚡"
+    },
+    "dart": {
+        "type": "missile",
+        "glyph1": "➢",
+        "glyph2": "➣"
+    },
+    "post": {
+        "glyph": "✉"
+    },
+    "charges": {
+        "many": "♻",
+        "infinite": "♾",
+        "n": "♺",
+        "7": "♹",
+        "6": "♸",
+        "5": "♷",
+        "4": "♶",
+        "3": "♵",
+        "2": "♴",
+        "1": "♳"
+    },
+    "anvil": {
+        "glyph": "π"
+    },
+    "jar": {
+        "glyph": "⚱"
+    },
+    "coffin": {
+        "glyph": "⚰"
+    },
+    "anchor": {
+        "glyph": "⚓"
+    },
+    "helm": {
+        "glyph": "⎈"
+    },
+    "diamond": {
+        "glyph": "♦"
+    },
+    "heart": {
+        "glyph": "♥"
+    },
+    "fruit": {
+        "glyph": "❦"
+    },
+    "vegetable": {
+        "glyph": "❧"
+    },
+    "crystal": {
+        "glyph": "❖"
+    },
+    "wind": {
+        "glyph": "༇"
+    },
+    "strong wind": {
+        "glyph": "༄"
+    },
+    "whirlwind": {
+        "glyph": "༅"
+    },
+    "shamrock": {
+        "glyph": "☘"
+    },
+    "flag": {
+        "glyph": "⚑"
+    },
+    "king": {
+        "glyph": "♚"
+    },
+    "queen": {
+        "glyph": "♛"
+    },
+    "rook": {
+        "glyph": "♜"
+    },
+    "cleric": {
+        "glyph": "♝"
+    },
+    "knight": {
+        "glyph": "♞"
+    },
+    "fighter": {
+        "glyph": "♟"
+    },
+    "pen": {
+        "glyph": "✑"
+    },
+    "hot springs": {
+        "glyph": "♨"
+    },
+    "alchemist": {
+        "glyph": "⚗"
+    },
+    "elemental": {
+        "glyph": "⚛"
+    },
+    "exit": {
+        "glyph": "⎋"
+    },
+    "entrance": {
+        "glyph": "⏎"
+    },
+    "hourglass": {
+        "glyph": "⌛"
+    },
+    "house": {
+        "glyph": "⌂"
+    },
+    "lock": {
+        "glyph": "◘"
+    },
+    "key": {
+        "glyph": "⥟"
+    },
+    "vampire": {
+        "glyph": "Ω"
+    },
+    "quest": {
+        "glyph": "ℹ"
+    },
+    "female": {
+        "glyph": "ª"
+    },
+    "male": {
+        "glyph": "º"
+    },
+    "flower": {
+        "glyph": "⚘"
+    },
+    "dissapoint": {
+        "glyph": "ಠ_ಠ",
+        "transform": "translateX(-60px) scale(.4)"
+    },
+    "adorable woodland creature": {
+        "glyph": "◕‿◕",
+        "transform": "translateX(-90px) scale(.3)"
+    },
+    "cheerful rosy cheeked menace": {
+        "glyph": "｡◕‿◕｡",
+        "transform": "translateX(-110px) scale(.25)"
+    },
+    "haunting lemur": {
+        "glyph": "ʘ‿ʘ",
+        "transform": "translateX(-65px) scale(.3)"
+    },
+    "useless squirrel": {
+        "glyph": "٩◔̯◔۶",
+        "transform": "translateX(-65px) scale(.3)"
+    },
+    "worried hippo": {
+        "glyph": "⊙﹏⊙",
+        "transform": "translateX(-65px) scale(.3)"
+    },
+    "wretched mime": {
+        "glyph": "ಥ_ಥ",
+        "transform": "translateX(-60px) scale(.35)"
+    },
+    "bear": {
+        "glyph": "ʕ•ᴥ•ʔ",
+        "transform": "translateX(-80px) scale(.35)"
+    },
+    "dire puppy": {
+        "glyph": "ᵔᴥᵔ",
+        "transform": "translateX(-40px) scale(.5)"
+    },
+    "raskally rabbit": {
+        "glyph": "•ω•",
+        "transform": "translateX(-35px) scale(.5)"
+    },
+    "evasive owl": {
+        "glyph": "☜(⌒▽⌒)☞",
+        "transform": "translateX(-120px) scale(.2)"
+    },
+    "muscle-bound twit": {
+        "glyph": "ᕙ(⇀‸↼‶)ᕗ",
+        "transform": "translateX(-90px) scale(.2)"
+    },
+    "tosser": {
+        "glyph": "(ノಠ益ಠ)ノ",
+        "transform": "translateX(-90px) scale(.17)"
+    },
+    "smug face": {
+        "glyph": "͡° ͜ʖ ͡°",
+        "transform": "translateX(-60px) scale(.35)"
+    },
+    "schmeterling": {
+        "glyph": "Ƹ̵̡Ӝ̵̨̄Ʒ",
+        "transform": "translateX(-60px) scale(.35)"
+    }
+}

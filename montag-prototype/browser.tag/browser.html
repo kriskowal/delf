@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="component" id="montag/text.tag">
+        <link rel="component" id="montag/label.tag">
+        <link rel="component" id="montag/list.tag">
+        <link rel="stylesheet" id="./browser.css">
+        <link rel="bindings" id="./browser.frb">
+    </head>
+    <body>
+        <div class="browser">
+            <div class="browser-glyph">
+                <div component="glyphContainer" class="glyph">
+                    <text component="glyph"></text>
+                </div>
+            </div>
+        </div>
+        <div class="selector">
+            <list component="entityOptions">
+                <div class="browser-entity-option">
+                    <label component="entityOptionLabel" for="this">
+                        <span class="glyph"><text component="entityOptionGlyph"></text></span>
+                        <text component="entityOptionName"></text>
+                    </label>
+                </div>
+            </list>
+        </div>
+    </body>
+</html>
