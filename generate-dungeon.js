@@ -1,6 +1,6 @@
 "use strict";
 
-var Point2 = require("./point2");
+var Point2 = require("ndim/point2");
 
 var point = new Point2();
 module.exports = generateDungeon;

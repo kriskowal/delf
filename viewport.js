@@ -1,8 +1,8 @@
 "use strict";
 
 var FastMap = require("collections/fast-map");
-var Point2 = require("./point2");
-var Region2 = require("./region2");
+var Point2 = require("ndim/point2");
+var Region2 = require("ndim/region2");
 var Area = require("./area");
 var TileView = require("./tile-view");
 var Tile = require("./tile");

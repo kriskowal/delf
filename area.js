@@ -1,7 +1,7 @@
 "use strict";
 
 var FastMap = require("collections/fast-map");
-var Point2 = require("./point2");
+var Point2 = require("ndim/point2");
 
 // shared temporary variable
 var point = new Point2();

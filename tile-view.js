@@ -1,6 +1,6 @@
 "use strict";
 
-var Point2 = require("./point2");
+var Point2 = require("ndim/point2");
 
 module.exports = TileView;
 function TileView() {
