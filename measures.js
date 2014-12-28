@@ -4,7 +4,7 @@
 
 exports.seasons = ['aut', 'hibern', 'vern', 'aest']; // -umn
 
-exports.ten = ['non', 'firs', 'sek', 'thir', 'four', 'fif', 'sik', 'sep', 'eigh', 'nin'];
+exports.ten = ['non', 'firs', 'sek', 'thir', 'four', 'fif', 'sik', 'sep', 'oc', 'nin'];
 
 exports.months = [ // 10
     'nonuary',
@@ -37,13 +37,21 @@ exports.daynites = [ // 6 days, 6 nights per week
     'solday', 'lunnite' // sun and moon
 ];
 
+
+// ash, oak, birch, yew
+// elm, fir (spruce, pine), holly, cedar
+// kapok, fig, maple, buckeye, hemlock,
+// chestnut, cypress, hickory, walnut
+// aspen, cherry, willow, sassafras, madrone, laurel,
+// juniper, alder, linden, poplar, sycamore
+// conifers: cypress, pine, yew
 exports.hours = [ // 14 hours
     'high dawn',
     'high elm',
-    'high pine',
+    'high fir',
     'high non',
-    'high spruce',
     'high cedar',
+    'high holly',
     'high dusk',
     'low dusk',
     'low ash',

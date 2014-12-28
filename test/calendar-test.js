@@ -1,3 +1,4 @@
+"use strict";
 
 var measures = require('../measures');
 
@@ -267,7 +268,7 @@ var tests = [
             year: 0,
             seasonday: 'Thir', // changes
             month: 'Sepentus', // changes
-            monthday: 'Eigh', // changes
+            monthday: 'Oc', // changes
             weekday: 'Marsday',
             hour: 'High Dawn',
             minute: '00',
