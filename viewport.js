@@ -190,7 +190,7 @@ Viewport.prototype.drawFrustum = function () {
         this.origin.removeChild(tileView.element);
     }, this);
 
-    //console.log("CREATED", created, "UNCHANGED", reused, "RECYCLED", recycled, "DISPOSED", tileViewsToFree.length, "USED", tileViews.length, "FREE", this.freeTileViews.length);
+    //console.log("CREATED", created, "UNCHANGED", reused, "RECYCLED", recycled, "DISPOSED", tileViewsToFree.length, "USED", this.tileViews.length, "FREE", this.freeTileViews.length);
 };
 
 // resize's reusable structure

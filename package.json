@@ -14,17 +14,17 @@
   },
   "dependencies": {
     "collections": "^2.0.1",
-    "domenic": "0.0.0",
+    "domenic": "^0.0.0",
     "mr": "^2.0.4",
-    "ndim": "^0.0.0",
+    "ndim": "^0.0.1",
     "q": "^2.0.2",
     "setimmediate": "^1.0.2"
+  },
+  "devDependencies": {
+    "jasminum": "^2.0.5"
   },
   "scripts": {
     "bundle": "mrs index.js > bundle.js",
     "test": "jasminum test"
-  },
-  "devDependencies": {
-    "jasminum": "0.0.4"
   }
 }
