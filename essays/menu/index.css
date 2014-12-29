@@ -1,0 +1,32 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Georgia, Times, Times New Roman, serif;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+}
+
+.hand {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    transition: top ease 300ms;
+}
+
+.menu {
+    overflow: auto;
+}
+
+.option {
+    display: flex;
+    justify-content: left;
+    align-content: center;
+    align-items: center;
+}
+

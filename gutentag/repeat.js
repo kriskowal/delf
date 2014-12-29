@@ -12,7 +12,7 @@ function Repetition(slot, scope, Iteration, attributes) {
     this._values = [];
     this._values.observeRangeChange(this, "values");
     this.body = document.createElement("body");
-    this.scope = scope.root.nest(this);
+    this.scope = scope.nest(this);
 }
 
 Object.defineProperty(Repetition.prototype, "values", {
