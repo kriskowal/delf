@@ -3,7 +3,7 @@ require('setimmediate');
 var Point2 = require('ndim/point2');
 var Region2 = require('ndim/region2');
 var Direction2 = require('../../direction2');
-var Inflatable = require('../../inflatable');
+var Inflatable = require('../../gutentag/inflatable');
 
 var element = document.querySelector('#deadcenter');
 var component = new Inflatable(element);

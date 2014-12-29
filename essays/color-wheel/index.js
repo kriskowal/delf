@@ -1,14 +1,14 @@
 "use strict";
 
-var Slot = require("../../slot");
-var Scope = require("../../scope");
+var Slot = require("../../gutentag/slot");
+var Scope = require("../../gutentag/scope");
+
+var Repeat = require("../../gutentag/repeat");
+var WindowRegion = require("../../gutentag/window-region");
+var Absolute = require("../../gutentag/absolute");
 
 var Point2 = require("ndim/point2");
 var Region2 = require("ndim/region2");
-
-var Repeat = require("../../repeat");
-var WindowRegion = require("../../window-region");
-var Absolute = require("../../absolute");
 
 var tileSize = new Point2(100, 100);
 var halfTileSize = tileSize.scale(.5);

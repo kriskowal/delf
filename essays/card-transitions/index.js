@@ -2,11 +2,11 @@
 
 var Q = require("q");
 
-var Slot = require("../../slot");
-var Scope = require("../../scope");
+var Slot = require("../../gutentag/slot");
+var Scope = require("../../gutentag/scope");
 
-var Repeat = require(".../../repeat");
-var WindowRegion = require("../../window-region");
+var Repeat = require(".../../gutentag/repeat");
+var WindowRegion = require("../../gutentag/window-region");
 
 var Direction2 = require('../../direction2');
 

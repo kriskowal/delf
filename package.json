@@ -6,7 +6,7 @@
   "main": "index.js",
   "author": "Kris Kowal",
   "translators": {
-    "html": "./translate-html"
+    "html": "./gutentag/translate-html"
   },
   "redirects": {
     "repeat.html": "./repeat.js",

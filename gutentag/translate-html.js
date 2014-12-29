@@ -78,9 +78,9 @@ function analyzeHead(head, program, template, module) {
 
 function translateDocument(document, program, template, module, name, displayName) {
     // TODO conditionally include this declaration, and rewrite the identifier reference
-    program.add("var Slot = require(\"./slot\");\n");
-    program.add("var Scope = require(\"./scope\");\n");
-    module.dependencies.push("./slot", "./scope");
+    program.add("var Slot = require(\"./gutentag/slot\");\n");
+    program.add("var Scope = require(\"./gutentag/scope\");\n");
+    module.dependencies.push("./gutentag/slot", "./gutentag/scope");
     var child = document.documentElement.firstChild;
     while (child) {
         if (child.nodeType === 1 /* ELEMENT_NODE */) {

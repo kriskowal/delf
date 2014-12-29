@@ -5,10 +5,10 @@ var Q = require("q");
 var Point2 = require("ndim/point2");
 var Region2 = require("ndim/region2");
 
-var renderer = require("../../renderer");
-var Transitioner = require("../../transitioner");
-var Absolute = require("../../absolute");
-var Inflatable = require("../../inflatable");
+var renderer = require("../../gutentag/renderer");
+var Transitioner = require("../../gutentag/transitioner");
+var Absolute = require("../../gutentag/absolute");
+var Inflatable = require("../../gutentag/inflatable");
 
 module.exports = Card;
 function Card(slot, scope) {
