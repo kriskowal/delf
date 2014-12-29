@@ -1,7 +1,7 @@
 "use strict";
 
-var Slot = require("./gutentag/slot");
-var Scope = require("./gutentag/scope");
+var Slot = require("../../gutentag/slot");
+var Scope = require("../../gutentag/scope");
 var DelfView = require("./delf.html");
 var enterCursorMode = require("./cursor-mode");
 var delf;
@@ -10,7 +10,9 @@ var mode;
 function main() {
 
     var slot = Slot.fromElement(document.body)
-    delf = new DelfView(slot, new Scope());
+
+    var scope = new Scope();
+    delf = new DelfView(slot, scope);
     slot.insert(delf.body);
 
     // Event listeners

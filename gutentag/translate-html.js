@@ -77,10 +77,6 @@ function analyzeHead(head, program, template, module) {
 }
 
 function translateDocument(document, program, template, module, name, displayName) {
-    // TODO conditionally include this declaration, and rewrite the identifier reference
-    program.add("var Slot = require(\"./gutentag/slot\");\n");
-    program.add("var Scope = require(\"./gutentag/scope\");\n");
-    module.dependencies.push("./gutentag/slot", "./gutentag/scope");
     var child = document.documentElement.firstChild;
     while (child) {
         if (child.nodeType === 1 /* ELEMENT_NODE */) {
@@ -154,7 +150,7 @@ function translateElement(node, program, template, name, displayName) {
         program.add("bottom = document.createTextNode(\"\");\n");
         program.add("parent.appendChild(bottom);\n");
         // TODO assess whether a top comment is necessary
-        program.add("childSlot = new Slot(bottom);\n");
+        program.add("childSlot = new slot.constructor(bottom);\n");
         // TODO argument templates, argumentScope
         // template:
         var argumentProgram = new Program();

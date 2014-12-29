@@ -24,7 +24,6 @@
     "jasminum": "^2.0.5"
   },
   "scripts": {
-    "bundle": "mrs index.js > bundle.js",
     "test": "jasminum test"
   }
 }
