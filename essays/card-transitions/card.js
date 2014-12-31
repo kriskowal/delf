@@ -113,7 +113,3 @@ Card.prototype.transitionTo = function (transform, transition) {
     element.style.transform = transform;
 };
 
-
-
-
-
