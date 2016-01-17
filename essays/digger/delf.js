@@ -1,8 +1,9 @@
 'use strict';
 
 module.exports = DelfView;
-function DelfView(slot, scope, argument, attributes) {
+function DelfView(slot, scope) {
     this.isFileMenuMode = false;
+    this.animator = scope.animator.add(this);
 }
 
 DelfView.prototype.hookup = function hookup(id, component, scope) {
@@ -30,6 +31,7 @@ DelfView.prototype.hookupThis = function hookupThis(component, scope) {
     this.colorPicker = components.colorPicker;
     this.colorLine = components.colorLine;
     this.styleSheet = components.styleSheet.sheet;
+    this.inspector = components.inspector;
 
     this.colorLine.style.visibility = 'hidden';
     this.colorPicker.delegate = this;
@@ -55,7 +57,7 @@ Object.defineProperty(DelfView.prototype, 'isKnobMode', {
 
 DelfView.prototype.handleColorChange = function handleColorChange(color) {
     this.styleSheet.deleteRule(0);
-    this.styleSheet.insertRule(".space { background-color: " + color.toStyle() + " }", 0);
+    this.styleSheet.insertRule(".tile1 { background-color: " + color.toStyle() + " }", 0);
 };
 
 DelfView.prototype.handleResize = function handleResize() {

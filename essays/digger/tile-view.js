@@ -22,9 +22,7 @@ TileView.prototype.draw = function () {
     this.pointPx.become(this.point).scaleThis(this.constructor.size);
     this.element.style.left = this.pointPx.x + "px";
     this.element.style.top = this.pointPx.y + "px";
-    if (this.tile.space) {
-    }
-    this.element.className = "tile" + (this.tile.space ? " space" : "");
+    this.element.className = "tile" + (this.tile.value > 0 ? " space" : "") + (this.tile.value > 0 ? " tile" + this.tile.value : "");
 };
 
 TileView.size = 24;

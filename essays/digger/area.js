@@ -46,19 +46,19 @@ Area.prototype.forEach = function (callback, thisp) {
 
 Area.prototype.fill = function () {
     this.forEach(function (tile) {
-        tile.space = false;
+        tile.value = 0;
     });
 };
 
 Area.prototype.dig = function () {
     this.forEach(function (tile) {
-        tile.space = true;
+        tile.value = 1;
     });
 };
 
 Area.prototype.flip = function () {
     this.forEach(function (tile) {
-        tile.space = !tile.space;
+        tile.value = +!tile.value;
     });
 };
 
@@ -67,7 +67,7 @@ Area.prototype.subThis = function (that) {
         point.x = x % that.size.x;
         point.y = y % that.size.y;
         if (that.get(point)) {
-            tile.space = false;
+            tile.value = false;
         }
     });
 };

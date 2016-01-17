@@ -12,12 +12,12 @@ function enterCursorMode(delf, viewport) {
     function cursorMode(event, key, keyCode) {
         if (event.type === "keyup") {
             if (keyCode === 13) {
-                delf.isCursorMode = false;
                 viewport.bottomCurb = 0;
+                delf.blur();
                 delf.draw();
                 return enterInspectorMode(delf, function () {
                     viewport.bottomCurb = 40;
-                    delf.isCursorMode = true;
+                    delf.focus();
                     delf.draw();
                     return cursorMode;
                 });
@@ -58,21 +58,13 @@ function enterCursorMode(delf, viewport) {
             //    return enterFileMode(function () {
             //        return cursorMode;
             //    });
-            } else if (key === "g") {
+            } else if (key === "g") { // go
                 delf.viewport.moveCursorToOrigin();
                 delf.draw();
-                // TODO "gg" for origin, "gX" for other marked locations
             }
-            // enter - open inspector for commands to perform on the selected region
-            // including the creation of a named region with triggers
-            // set the cursor position to the origin
-            // "(" begin macro end macro ")"
-            // "." replay last command
-            // "/" chat
-            // "?" toggle help
-            // number
-            // save context (cursor etc)
-            // restore context (cursor etc)
+            // TODO "gg" for origin, "gX" for other marked locations
+            // TODO "G" mark a location
+            // TODO "GG" move origin
         }
         return cursorOrKnobMode(event, key, keyCode, cursorMode);
     }

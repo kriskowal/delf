@@ -28,12 +28,33 @@ function enterCursorOrKnobMode(delf, viewport) {
             } else if (key === "+") {
                 viewport.add();
                 delf.draw();
-            } else if (key === "1") {
+            } else if (key === "F") {
+                delf.blur();
+                delf.colorLine.style.visibility = 'visible';
+                // TODO set colorLine delegate to fill cover
+                return enterColorPickerMode(delf.colorPicker, exitColorPickerMode);
+            } else if (key === "D") {
                 delf.blur();
                 delf.colorLine.style.visibility = 'visible';
                 return enterColorPickerMode(delf.colorPicker, exitColorPickerMode);
-            // TODO "G" mark a location
             }
+            // enter - open inspector for commands to perform on the selected region
+            // including the creation of a named region with triggers
+            // set the cursor position to the origin
+            // "(" begin macro end macro ")"
+            // "." replay last command
+            // "/" chat
+            // "?" toggle help
+            // number
+            // save context (cursor etc)
+            // restore context (cursor etc)
+            // TODO
+            // "D" set dig value (transparent background)
+            // "F" set fill value (foreground value for current number)
+            // "e" open inventory
+            // "E" edit inventory?
+            // ? color
+            // "G" mark location
             // enter - open inspector for commands to perform on the selected region
             // including the creation of a named region with triggers
             // set the cursor position to the origin

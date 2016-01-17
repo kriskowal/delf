@@ -4,12 +4,12 @@ module.exports = enterInspectorMode;
 function enterInspectorMode(delf, exit) {
 
     delf.viewport.rightCurb = window.innerWidth / 3;
-    delf.inspectorElement.style.visibility = "visible";
+    delf.inspector.style.visibility = "visible";
     delf.draw();
 
     function _exit() {
         delf.viewport.rightCurb = 0;
-        delf.inspectorElement.style.visibility = "hidden";
+        delf.inspector.style.visibility = "hidden";
         delf.draw();
         return exit();
     }
