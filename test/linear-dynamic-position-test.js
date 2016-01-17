@@ -1,7 +1,7 @@
 "use strict";
 
 var Point2 = require("ndim/point2");
-var LinearDynamicPosition = require("../linear-dynamic-position");
+var LinearDynamicPosition = require("../lib/linear-dynamic-position");
 
 it("initial position", function () {
     var dynamics = new LinearDynamicPosition(null, 0);
