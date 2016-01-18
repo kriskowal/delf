@@ -25,13 +25,16 @@ function main() {
             temp.x = record.x;
             temp.y = record.y;
             var tile = view.viewport.tiles.get(temp);
-            tile.value = record.value;
-            view.viewport.animator.requestDraw();
+            if (record.value !== tile.value) {
+                tile.value = record.value;
+                view.viewport.animator.requestDraw();
+            }
         },
         onRemoved: function onRemoved(record) {
             temp.x = record.x;
             temp.y = record.y;
-            view.viewport.tiles.delete(temp);
+            var tile = view.viewport.tiles.get(temp);
+            tile.value = 0;
             view.viewport.animator.requestDraw();
         },
         onChanged: function onChanged(delta) {
@@ -54,12 +57,18 @@ function main() {
 
     view.viewport.storage = {
         update: function update(point, value) {
-            model.upsert({
-                id: point.x + ',' + point.y,
-                x: point.x,
-                y: point.y,
-                value: value
-            });
+            if (value) {
+                model.upsert({
+                    id: point.x + ',' + point.y,
+                    x: point.x,
+                    y: point.y,
+                    value: value
+                });
+            } else {
+                model.remove({
+                    id: point.x + ',' + point.y
+                });
+            }
             view.viewport.animator.requestDraw();
         }
     };
