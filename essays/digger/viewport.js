@@ -12,9 +12,12 @@ var point = new Point2();
 
 module.exports = Viewport;
 function Viewport(body, scope) {
+    var self = this;
     this.tiles = new FastMap(); // point to tile model
+    this.storage = null;
     this.tiles.getDefault = function (point) {
         var tile = new Tile(point);
+        tile.delegate = self;
         this.set(point.clone(), tile);
         return tile;
     };
@@ -71,6 +74,14 @@ Viewport.prototype.prevCursorQuadrant = {
     "ne": "nw",
     "se": "ne",
     "sw": "se"
+};
+
+Viewport.prototype.update = function update(point, value) {
+    var view = this.tileViews.get(point);
+    if (view) {
+        view.draw();
+    }
+    this.storage.update(point, value);
 };
 
 Viewport.prototype.hookup = function hookup(id, component, scope) {
@@ -512,7 +523,7 @@ Viewport.prototype.sub = function sub() {
         point.x = x % this.bufferSize.x;
         point.y = y % this.bufferSize.y;
         if (this.buffer.get(point)) {
-            tile.value = fal0;
+            tile.value = k;
         }
     }, this);
 };
