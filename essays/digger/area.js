@@ -44,15 +44,15 @@ Area.prototype.forEach = function (callback, thisp) {
     }
 };
 
-Area.prototype.fill = function () {
+Area.prototype.fill = function (value) {
     this.forEach(function (tile) {
-        tile.value = 0;
+        tile.value = value;
     });
 };
 
-Area.prototype.dig = function () {
+Area.prototype.dig = function (value) {
     this.forEach(function (tile) {
-        tile.value = 1;
+        tile.value = 0;
     });
 };
 
@@ -86,4 +86,3 @@ Area.prototype.flipHorizontal = function () {
 
 Area.prototype.flipVertical = function () {
 };
-

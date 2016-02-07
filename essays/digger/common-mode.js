@@ -10,7 +10,7 @@ function enterCursorOrKnobMode(delf, viewport) {
             if (key === "d") {
                 viewport.dig();
             } else if (key === "f") {
-                viewport.fill();
+                viewport.fill(delf.fillValue);
             } else if (key === "c" || key === "y") {
                 viewport.copy();
             } else if (key === "x") {
@@ -37,7 +37,10 @@ function enterCursorOrKnobMode(delf, viewport) {
                 delf.blur();
                 delf.colorLine.style.visibility = 'visible';
                 return enterColorPickerMode(delf.colorPicker, exitColorPickerMode);
+            } else if (+key >= 1 && +key <= 9) {
+                delf.fillValue = +key;
             }
+
             // enter - open inspector for commands to perform on the selected region
             // including the creation of a named region with triggers
             // set the cursor position to the origin

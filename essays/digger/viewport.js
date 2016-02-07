@@ -467,8 +467,8 @@ Viewport.prototype.shrinkKnob = function () {
     }
 };
 
-Viewport.prototype.fill = function fill() {
-    this.cursorArea.fill();
+Viewport.prototype.fill = function fill(value) {
+    this.cursorArea.fill(value);
 };
 
 Viewport.prototype.dig = function dig() {
