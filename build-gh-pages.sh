@@ -22,6 +22,12 @@ function tree() {
     echo "040000 tree $(git mktree < $2)"$'\t'"$1"
 }
 
+function gengrid() {
+    blob index.html essays/grid/bundle.html
+    blob index.css essays/grid/index.css
+    blob bundle.js <(bundle essays/grid/index.js)
+}
+
 function genroot() {
     # generates the root directory for delve build products.
     blob CNAME essays/digger/CNAME
@@ -31,6 +37,8 @@ function genroot() {
     blob index.css essays/digger/index.css
     blob colorim.css node_modules/colorim.html/index.css
     blob bundle.js <(bundle essays/digger/index.js)
+
+    tree grid <(gengrid)
 }
 
 OVERLAY=$(genroot | git mktree)
@@ -39,6 +47,6 @@ git read-tree --prefix=/ $OVERLAY
 TREE=$(git write-tree --missing-ok)
 # PARENT=$(git rev-parse refs/heads/master)
 COMMIT=$(git commit-tree $TREE < <(echo Bundle world editor))
-git update-ref refs/heads/delve-gh-pages $COMMIT
+git update-ref refs/heads/gh-pages $COMMIT
 
 rm $GIT_INDEX_FILE
