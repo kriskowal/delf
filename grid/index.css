@@ -1,0 +1,32 @@
+body {
+    overflow: hidden;
+}
+
+.tile {
+    position: absolute;
+    border-top: dotted 1px black;
+    border-left: dotted 1px black;
+}
+
+.origin {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.grid1box > .tile {
+    border-color: blue;
+    z-index: 1;
+}
+
+.grid2box > .tile {
+    border-color: red;
+    z-index: 2;
+}
+
