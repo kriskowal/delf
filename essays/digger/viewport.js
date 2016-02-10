@@ -4,7 +4,6 @@ var FastMap = require("collections/fast-map");
 var Point2 = require("ndim/point2");
 var Region2 = require("ndim/region2");
 var Area = require("./area");
-var TileView = require("./tile-view");
 var Tile = require("./tile");
 var makeArrayObservable = require('pop-observe').makeArrayObservable;
 
@@ -21,22 +20,25 @@ function Viewport(body, scope) {
         this.set(point.clone(), tile);
         return tile;
     };
-    this.tileViews = new FastMap(); // point to tile view
     this.knobRegion = new Region2(new Point2(0, 0), new Point2(1, 1));
     this.cursorRegion = new Region2(new Point2(0, 0), new Point2(1, 1));
-    this.cursorArea = new Area(this.cursorRegion.size, this.cursorRegion.position, this.tiles, this.tileViews);
+    this.cursorArea = new Area(this.cursorRegion.size, this.cursorRegion.position, this.tiles, this);
     this.cursorStack = [];
     this.cursorIndex = 0;
     this.isFocused = false;
     this.isCursorMode = true;
     this.isKnobMode = false;
+    // TODO replace curbs with a center, adjusted in response to visible region change events
     this.leftCurb = 0;
     this.topCurb = 0;
     this.bottomCurb = 0;
     this.rightCurb = 0;
-    this.drawFrustumHandle = null;
-    this.drawFrustum = this.drawFrustum.bind(this);
     this.animator = scope.animator.add(this);
+    this.attention = scope.attention;
+
+    this.tileSize = new Point2(24, 24);
+    this.tileSpace = null;
+    this.region = new Region2(new Point2(), new Point2());
 
     // TODO use a Bin abstraction that captures the data and dimensions and has the
     // methods for transpose etc
@@ -76,17 +78,15 @@ Viewport.prototype.prevCursorQuadrant = {
     "sw": "se"
 };
 
-Viewport.prototype.update = function update(point, value) {
-    var view = this.tileViews.get(point);
-    if (view) {
-        view.draw();
-    }
+Viewport.prototype.onTileChange = function onTileChange(point, value) {
+    this.tileSpace.requestDrawTile(point);
     this.storage.update(point, value);
 };
 
 Viewport.prototype.hookup = function hookup(id, component, scope) {
     if (id === 'this') {
         this.hookupThis(component, scope);
+    } else if (id === 'tiles:tile') {
     }
 };
 
@@ -96,6 +96,9 @@ Viewport.prototype.hookupThis = function hookupThis(component, scope) {
     this.origin = components.origin;
     this.cursor = components.cursor;
     this.knob = components.knob;
+    this.tileSpace = components.tiles;
+    this.tileSpace.tileSize.copyFrom(this.tileSize);
+    this.tileSpace.delegate = this;
 };
 
 var knobPx = new Region2(new Point2(), new Point2());
@@ -107,7 +110,7 @@ Viewport.prototype.draw = function draw() {
     var knobElement = this.knob;
     var cursorElement = this.cursor;
 
-    knobPx.become(this.knobRegion).scaleThis(TileView.size);
+    knobPx.copyFrom(this.knobRegion).scaleThis(24);
     knobPx.size.x -= 12;
     knobPx.size.y -= 12;
     knobElement.style.opacity = this.isFocused && this.isKnobMode ? 1 : 0;
@@ -116,14 +119,14 @@ Viewport.prototype.draw = function draw() {
     knobElement.style.width = knobPx.size.x + "px";
     knobElement.style.height = knobPx.size.y + "px";
 
-    cursorPx.become(this.cursorRegion).scaleThis(TileView.size);
+    cursorPx.copyFrom(this.cursorRegion).scaleThis(24);
     cursorElement.style.opacity = this.isFocused && this.isCursorMode ? 1 : 0;
     cursorElement.style.left = cursorPx.position.x + "px";
     cursorElement.style.top = cursorPx.position.y + "px";
     cursorElement.style.width = cursorPx.size.x + "px";
     cursorElement.style.height = cursorPx.size.y + "px";
 
-    halfCursorSizePx.become(this.cursorRegion.size).scaleThis(TileView.size).scaleThis(.5);
+    halfCursorSizePx.copyFrom(this.cursorRegion.size).scaleThis(24).scaleThis(.5);
 
     originPx.x = (this.leftCurb - this.rightCurb) / 2;
     originPx.y = (this.topCurb - this.bottomCurb) / 2;
@@ -131,96 +134,18 @@ Viewport.prototype.draw = function draw() {
     originElement.style.left = originPx.x + "px";
     originElement.style.top = originPx.y + "px";
 
-    this.requestDrawFrustum();
+    this.reframe();
 };
 
-Viewport.prototype.requestDrawFrustum = function () {
-    if (this.drawFrustumHandle) {
-        clearTimeout(this.drawFrustumHandle);
-    }
-    this.drawFrustumHandle = setTimeout(this.drawFrustum, 1000);
-};
-
-Viewport.prototype.freeTileViews = [];
-makeArrayObservable(Viewport.prototype.freeTileViews);
-
-var windowSize = new Point2();
-var frustum = new Region2(new Point2(), new Point2());
-var marginLength = 30;
-var margin = new Point2(marginLength, marginLength);
-var offset = new Point2();
-offset.become(Point2.zero).subThis(margin).scaleThis(.5);
-var tileViewsToFree = [];
-Viewport.prototype.drawFrustum = function () {
-    this.drawFrustumHandle = null;
-
-    windowSize.x = window.innerWidth;
-    windowSize.y = window.innerHeight;
-    frustum.size.become(windowSize)
-        .scaleThis(1/TileView.size)
+Viewport.prototype.reframe = function reframe() {
+    this.region.size.x = window.innerWidth;
+    this.region.size.y = window.innerHeight;
+    this.region.position.copyFrom(this.region.size)
+        .subThis(cursorPx.size)
+        .scaleThis(-0.5)
         .floorThis()
-        .addThis(margin);
-    frustum.position.become(Point2.zero)
-        .subThis(frustum.size)
-        .scaleThis(.5)
-        .floorThis()
-        .addThis(this.cursorRegion.position);
-
-    // Mark all visible tileViews as unused
-    this.tileViews.forEach(function (tileView) {
-        tileView.mark = false;
-    });
-
-    var created = 0;
-    var recycled = 0;
-    var reused = 0;
-
-    var left = frustum.position.x;
-    var top = frustum.position.y;
-    var width = frustum.size.x;
-    var height = frustum.size.y;
-    for (var x = 0; x < width; x++) {
-        for (var y = 0; y < height; y++) {
-            point.x = left + x;
-            point.y = top + y;
-            var tileView = this.tileViews.get(point);
-            if (!tileView) {
-                if (this.freeTileViews.length) {
-                    tileView = this.freeTileViews.pop();
-                    recycled++;
-                } else {
-                    tileView = new TileView();
-                    created++;
-                }
-                tileView.reset();
-                tileView.mark = true;
-                tileView.point.become(point);
-                tileView.tile = this.tiles.get(tileView.point);
-                tileView.draw();
-                this.origin.insertBefore(tileView.element, this.cursor);
-                this.tileViews.set(tileView.point, tileView);
-            } else {
-                reused++;
-            }
-            // Mark the used tile to be retained
-            tileView.mark = true;
-        }
-    }
-
-    // Collect the garbage for recycling
-    tileViewsToFree.length = 0;
-    this.tileViews.forEach(function (tileView) {
-        if (!tileView.mark) {
-            tileViewsToFree.push(tileView);
-        }
-    }, this);
-    this.freeTileViews.swap(this.freeTileViews.length, 0, tileViewsToFree);
-    tileViewsToFree.forEach(function (tileView) {
-        this.tileViews.delete(tileView.point);
-        this.origin.removeChild(tileView.element);
-    }, this);
-
-    //console.log("CREATED", created, "UNCHANGED", reused, "RECYCLED", recycled, "DISPOSED", tileViewsToFree.length, "USED", this.tileViews.length, "FREE", this.freeTileViews.length);
+        .addThis(cursorPx.position);
+    this.tileSpace.reframe(this.region);
 };
 
 // resize's reusable structure
@@ -231,12 +156,21 @@ Viewport.prototype.handleResize = function () {
     centerPx.scaleThis(.5);
     this.center.style.top = centerPx.y + "px";
     this.center.style.left = centerPx.x + "px";
-    this.drawFrustum();
+
+    this.reframe();
+};
+
+Viewport.prototype.drawTile = function drawTile(tile) {
+    var model = this.tiles.get(tile.point);
+    if (!model) {
+        return;
+    }
+    tile.actualNode.className = "tile" + (model.value > 0 ? " space" : "") + (model.value > 0 ? " tile" + model.value : "");
 };
 
 Viewport.prototype.moveCursor = function (direction, size) {
     size = size || this.cursorRegion.size;
-    point.become(this.directions[direction]);
+    point.copyFrom(this.directions[direction]);
     point.x *= size.x;
     point.y *= size.y;
     this.cursorRegion.position.addThis(point);
@@ -247,38 +181,38 @@ Viewport.prototype.creepCursor = function (direction) {
 };
 
 Viewport.prototype.getCursorPosition = function () {
-    point.become(this.cursorRegion.size)
+    point.copyFrom(this.cursorRegion.size)
         .subThis(Point2.one)
         .scaleThis(.5)
         .floorThis();
-    this.cursorRegion.position.become(position)
+    this.cursorRegion.position.copyFrom(position)
         .subThis(point);
 };
 
 Viewport.prototype.moveCursorTo = function (position) {
-    point.become(this.cursorRegion.size)
+    point.copyFrom(this.cursorRegion.size)
         .subThis(Point2.one)
         .scaleThis(.5)
         .floorThis();
-    this.cursorRegion.position.become(position)
+    this.cursorRegion.position.copyFrom(position)
         .subThis(point);
 };
 
 Viewport.prototype.moveCursorToOrigin = function () {
-    point.become(this.cursorRegion.size)
+    point.copyFrom(this.cursorRegion.size)
         .subThis(Point2.one)
         .scaleThis(.5)
         .floorThis();
-    this.cursorRegion.position.become(Point2.zero)
+    this.cursorRegion.position.copyFrom(Point2.zero)
         .subThis(point);
 };
 
 Viewport.prototype.moveKnobToOrigin = function () {
-    point.become(this.knobRegion.size)
+    point.copyFrom(this.knobRegion.size)
         .subThis(Point2.one)
         .scaleThis(.5)
         .floorThis();
-    this.cursorRegion.position.become(Point2.zero)
+    this.cursorRegion.position.copyFrom(Point2.zero)
         .subThis(this.knobRegion.position)
         .subThis(point);
 };
@@ -306,11 +240,11 @@ Viewport.prototype.shrinkCursor = function () {
 };
 
 Viewport.prototype.collapseCursor = function () {
-    point.become(this.cursorRegion.size).scaleThis(.5).floorThis();
-    this.cursorRegion.size.become(Point2.one);
+    point.copyFrom(this.cursorRegion.size).scaleThis(.5).floorThis();
+    this.cursorRegion.size.copyFrom(Point2.one);
     this.cursorRegion.position.addThis(point);
-    this.knobRegion.size.become(Point2.one);
-    this.knobRegion.position.become(Point2.zero);
+    this.knobRegion.size.copyFrom(Point2.one);
+    this.knobRegion.position.copyFrom(Point2.zero);
     this.animator.requestDraw();
 };
 
@@ -325,9 +259,9 @@ Viewport.prototype.moveKnob = function (direction, size) {
     // directions: up, down, left, right
     // size: either 1x1 or knob size
     // absolute position of the knob
-    change.become(this.directions[direction]).mulThis(size);
-    position.become(cursor.position).addThis(knob.position);
-    newPosition.become(position).addThis(change);
+    change.copyFrom(this.directions[direction]).mulThis(size);
+    position.copyFrom(cursor.position).addThis(knob.position);
+    newPosition.copyFrom(position).addThis(change);
     var quadrant = this.getKnobQuadrant();
     // quadrant[0] === "n" or "c" means top adjacent
     // adjacent means that side must be pulled if moving away from it
@@ -362,7 +296,7 @@ Viewport.prototype.moveKnob = function (direction, size) {
         cursor.size.x += change.x;
     }
 
-    knob.position.become(newPosition).subThis(cursor.position);
+    knob.position.copyFrom(newPosition).subThis(cursor.position);
 };
 
 Viewport.prototype.creepKnob = function (direction) {
@@ -414,7 +348,7 @@ Viewport.prototype.rotateKnobCounterClockwise = function () {
 Viewport.prototype.rotateCursorClockwise = function () {
     var quadrant = this.getKnobQuadrant();
     var nextQuadrant = this.nextCursorQuadrant[quadrant];
-    point.become(this.knobRegion.position);
+    point.copyFrom(this.knobRegion.position);
     this.setKnobQuadrant(nextQuadrant);
     this.cursorRegion.position.subThis(this.knobRegion.position).addThis(point);
     this.flipBuffer(quadrant, nextQuadrant);
@@ -423,7 +357,7 @@ Viewport.prototype.rotateCursorClockwise = function () {
 Viewport.prototype.rotateCursorCounterClockwise = function () {
     var quadrant = this.getKnobQuadrant();
     var prevQuadrant = this.prevCursorQuadrant[quadrant];
-    point.become(this.knobRegion.position);
+    point.copyFrom(this.knobRegion.position);
     this.setKnobQuadrant(prevQuadrant);
     this.cursorRegion.position.subThis(this.knobRegion.position).addThis(point);
     this.flipBuffer(quadrant, prevQuadrant);
@@ -432,7 +366,7 @@ Viewport.prototype.rotateCursorCounterClockwise = function () {
 Viewport.prototype.transposeCursorAboutKnob = function () {
     var quadrant = this.getKnobQuadrant();
     this.transposeBuffer(quadrant);
-    point.become(this.knobRegion.position);
+    point.copyFrom(this.knobRegion.position);
     var temp = this.cursorRegion.size.x;
     this.cursorRegion.size.x = this.cursorRegion.size.y;
     this.cursorRegion.size.y = temp;
@@ -450,20 +384,20 @@ Viewport.prototype.growKnob = function () {
         this.cursorRegion.position.subThis(Point2.one);
     }
     // grow knob to match cursor size
-    this.knobRegion.size.become(this.cursorRegion.size);
-    this.knobRegion.position.become(Point2.zero);
+    this.knobRegion.size.copyFrom(this.cursorRegion.size);
+    this.knobRegion.position.copyFrom(Point2.zero);
 };
 
 Viewport.prototype.shrinkKnob = function () {
     if (this.cursorIndex > 0) {
         // restore smaller remembered cursor
         var quadrant = this.getKnobQuadrant();
-        this.knobRegion.size.become(this.cursorStack[--this.cursorIndex]);
+        this.knobRegion.size.copyFrom(this.cursorStack[--this.cursorIndex]);
         this.setKnobQuadrant(quadrant);
     } else {
         this.cursorRegion.position.addThis(this.knobRegion.position);
-        this.cursorRegion.size.become(this.knobRegion.size);
-        this.knobRegion.position.become(Point2.zero);
+        this.cursorRegion.size.copyFrom(this.knobRegion.size);
+        this.knobRegion.position.copyFrom(Point2.zero);
     }
 };
 
@@ -477,7 +411,7 @@ Viewport.prototype.dig = function dig() {
 
 Viewport.prototype.copy = function copy() {
     this.buffer.clear();
-    this.bufferSize.become(this.cursorRegion.size);
+    this.bufferSize.copyFrom(this.cursorRegion.size);
     this.cursorArea.forEach(function (tile, x, y) {
         point.x = x;
         point.y = y;
@@ -487,7 +421,7 @@ Viewport.prototype.copy = function copy() {
 
 Viewport.prototype.cut = function cut() {
     this.buffer.clear();
-    this.bufferSize.become(this.cursorRegion.size);
+    this.bufferSize.copyFrom(this.cursorRegion.size);
     this.cursorArea.forEach(function (tile, x, y) {
         point.x = x;
         point.y = y;
@@ -535,7 +469,7 @@ var tempBufferSize = new Point2();
 Viewport.prototype.flipBuffer = function(prev, next) {
     var temp;
     tempBuffer.clear();
-    tempBufferSize.become(this.bufferSize);
+    tempBufferSize.copyFrom(this.bufferSize);
     var width = this.cursorRegion.size.x;
     var height = this.cursorRegion.size.y;
     if (prev[0] !== next[0]) { // vertical
@@ -611,6 +545,7 @@ Viewport.prototype.transposeBuffer = function (quadrant) {
 };
 
 Viewport.prototype.focus = function focus() {
+    this.attention.take(this);
     this.isFocused = true;
     this.animator.requestDraw();
 };

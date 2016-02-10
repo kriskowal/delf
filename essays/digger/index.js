@@ -3,6 +3,7 @@
 var Document = require('gutentag/document');
 var Scope = require('gutentag/scope');
 var Animator = require('blick');
+var Attention = require('../../lib/attention');
 var View = require('./delf.html');
 var enterCursorMode = require('./cursor-mode');
 var Fusion = window.require('Fusion');
@@ -11,10 +12,12 @@ function main() {
     var scope = new Scope();
     var document = new Document(window.document.body);
     scope.animator = new Animator();
+    scope.attention = new Attention();
     var view = new View(document.documentElement, scope);
     var mode = enterCursorMode(view, view.viewport);
 
     // var storage = new Storage('gol01.aelf.land:8181', {secure: false});
+    view.viewport.storage = {update: function noop(){}};
 
     // Event listeners
     window.addEventListener('resize', resize);

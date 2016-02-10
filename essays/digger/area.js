@@ -7,11 +7,11 @@ var Point2 = require("ndim/point2");
 var point = new Point2();
 
 module.exports = Area;
-function Area(size, position, tiles, tileViews) {
+function Area(size, position, tiles, view) {
     this.size = size || new Point2();
     this.position = position || new Point2();
     this.tiles = tiles || new FastMap();
-    this.tileViews = tileViews;
+    this.view = view;
 }
 
 Area.prototype.get = function (offset) {
@@ -21,11 +21,10 @@ Area.prototype.get = function (offset) {
 
 Area.prototype.touch = function (offset) {
     point.become(this.position).addThis(offset);
-    this.tileViews.get(point).draw();
 };
 
 Area.prototype.sliceThis = function (position, size) {
-    return new Area(size, this.position.add(position), this.tiles, this.tileViews);
+    return new Area(size, this.position.add(position), this.tiles, this.view);
 };
 
 Area.prototype.forEach = function (callback, thisp) {
@@ -35,11 +34,7 @@ Area.prototype.forEach = function (callback, thisp) {
         for (var y = 0; y < height; y++) {
             point.x = this.position.x + x;
             point.y = this.position.y + y;
-            var tileView = this.tileViews && this.tileViews.get(point);
             callback.call(thisp, this.tiles.get(point), x, y);
-            if (tileView) {
-                tileView.draw();
-            }
         }
     }
 };
@@ -47,19 +42,22 @@ Area.prototype.forEach = function (callback, thisp) {
 Area.prototype.fill = function (value) {
     this.forEach(function (tile) {
         tile.value = value;
-    });
+        this.view.onTileChange(tile.point);
+    }, this);
 };
 
 Area.prototype.dig = function (value) {
     this.forEach(function (tile) {
         tile.value = 0;
-    });
+        this.view.onTileChange(tile.point);
+    }, this);
 };
 
 Area.prototype.flip = function () {
     this.forEach(function (tile) {
         tile.value = +!tile.value;
-    });
+        this.view.onTileChange(tile.point);
+    }, this);
 };
 
 Area.prototype.subThis = function (that) {
@@ -68,8 +66,9 @@ Area.prototype.subThis = function (that) {
         point.y = y % that.size.y;
         if (that.get(point)) {
             tile.value = false;
+            this.view.onTileChange(tile.point);
         }
-    });
+    }, this);
 };
 
 Area.prototype.addThis = function (that) {
