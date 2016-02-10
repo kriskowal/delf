@@ -22,10 +22,10 @@ function tree() {
     echo "040000 tree $(git mktree < $2)"$'\t'"$1"
 }
 
-function gengrid() {
-    blob index.html essays/grid/bundle.html
-    blob index.css essays/grid/index.css
-    blob bundle.js <(bundle essays/grid/index.js)
+function gentiles() {
+    blob index.html essays/tiles/bundle.html
+    blob index.css essays/tiles/index.css
+    blob bundle.js <(bundle essays/tiles/index.js)
 }
 
 function genroot() {
@@ -38,7 +38,7 @@ function genroot() {
     blob colorim.css node_modules/colorim.html/index.css
     blob bundle.js <(bundle essays/digger/index.js)
 
-    tree grid <(gengrid)
+    tree tiles <(gentiles)
 }
 
 OVERLAY=$(genroot | git mktree)
