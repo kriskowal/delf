@@ -25,7 +25,7 @@ DelfView.prototype.blur = function blur() {
 DelfView.prototype.hookupThis = function hookupThis(component, scope) {
     var components = scope.components;
     this.viewport = components.viewport;
-    this.viewport.bottomCurb = 40;
+    this.viewport.bottomCurb = 80;
 
     this.cursorMode = components.cursorMode;
     this.knobMode = components.knobMode;
@@ -34,6 +34,8 @@ DelfView.prototype.hookupThis = function hookupThis(component, scope) {
     this.colorLine = components.colorLine;
     this.styleSheet = components.styleSheet.sheet;
     this.inspector = components.inspector;
+
+    this.inventory = components.inventory;
 
     this.colorLine.style.visibility = 'hidden';
     this.colorPicker.delegate = this;

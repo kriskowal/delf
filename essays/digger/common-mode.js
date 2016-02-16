@@ -37,7 +37,8 @@ function enterCursorOrKnobMode(delf, viewport) {
                 delf.blur();
                 delf.colorLine.style.visibility = 'visible';
                 return enterColorPickerMode(delf.colorPicker, exitColorPickerMode);
-            } else if (+key >= 1 && +key <= 9) {
+            } else if (+key >= 0 && +key <= 9) {
+                delf.inventory.setActiveItem(+key);
                 delf.fillValue = +key;
             }
 
