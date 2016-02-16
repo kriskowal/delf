@@ -15,16 +15,8 @@ function Area(size, position, tiles, view) {
 }
 
 Area.prototype.get = function (offset) {
-    point.become(this.position).addThis(offset);
+    point.copyFrom(this.position).addThis(offset);
     return this.tiles.get(point);
-};
-
-Area.prototype.touch = function (offset) {
-    point.become(this.position).addThis(offset);
-};
-
-Area.prototype.sliceThis = function (position, size) {
-    return new Area(size, this.position.add(position), this.tiles, this.view);
 };
 
 Area.prototype.forEach = function (callback, thisp) {
@@ -42,21 +34,21 @@ Area.prototype.forEach = function (callback, thisp) {
 Area.prototype.fill = function (value) {
     this.forEach(function (tile) {
         tile.value = value;
-        this.view.onTileChange(tile.point);
+        this.view.handleTileChange(tile.point);
     }, this);
 };
 
 Area.prototype.dig = function (value) {
     this.forEach(function (tile) {
         tile.value = 0;
-        this.view.onTileChange(tile.point);
+        this.view.handleTileChange(tile.point);
     }, this);
 };
 
 Area.prototype.flip = function () {
     this.forEach(function (tile) {
         tile.value = +!tile.value;
-        this.view.onTileChange(tile.point);
+        this.view.handleTileChange(tile.point);
     }, this);
 };
 
@@ -66,7 +58,7 @@ Area.prototype.subThis = function (that) {
         point.y = y % that.size.y;
         if (that.get(point)) {
             tile.value = false;
-            this.view.onTileChange(tile.point);
+            this.view.handleTileChange(tile.point);
         }
     }, this);
 };

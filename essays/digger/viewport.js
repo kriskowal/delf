@@ -78,11 +78,6 @@ Viewport.prototype.prevCursorQuadrant = {
     "sw": "se"
 };
 
-Viewport.prototype.onTileChange = function onTileChange(point, value) {
-    this.tileSpace.requestDrawTile(point);
-    this.storage.update(point, value);
-};
-
 Viewport.prototype.hookup = function hookup(id, component, scope) {
     if (id === 'this') {
         this.hookupThis(component, scope);
@@ -157,7 +152,12 @@ Viewport.prototype.handleResize = function () {
     this.center.style.top = centerPx.y + "px";
     this.center.style.left = centerPx.x + "px";
 
-    this.reframe();
+    this.animator.requestDraw();
+};
+
+Viewport.prototype.handleTileChange = function handleTileChange(point, value) {
+    this.tileSpace.requestDrawTile(point);
+    this.storage.update(point, value);
 };
 
 Viewport.prototype.drawTile = function drawTile(tile) {
@@ -427,6 +427,7 @@ Viewport.prototype.cut = function cut() {
         point.y = y;
         this.buffer.set(point.clone(), tile.value);
         tile.value = 0;
+        this.handleTileChange(tile.point);
     }, this);
 };
 
@@ -435,6 +436,7 @@ Viewport.prototype.paste = function paste() {
         point.x = x % this.bufferSize.x;
         point.y = y % this.bufferSize.y;
         tile.value = this.buffer.get(point);
+        this.handleTileChange(tile.point);
     }, this);
 };
 
@@ -448,6 +450,7 @@ Viewport.prototype.add = function add() {
         point.y = y % this.bufferSize.y;
         if (this.buffer.get(point)) {
             tile.value = 1;
+            this.handleTileChange(tile.point);
         }
     }, this);
 };
@@ -458,6 +461,7 @@ Viewport.prototype.sub = function sub() {
         point.y = y % this.bufferSize.y;
         if (this.buffer.get(point)) {
             tile.value = k;
+            this.handleTileChange(tile.point);
         }
     }, this);
 };
