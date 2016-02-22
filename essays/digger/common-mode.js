@@ -1,6 +1,30 @@
 "use strict";
 
-var enterColorPickerMode = require('./color-picker-mode');
+var colorKeys = {
+    "1": 1,
+    "2": 2,
+    "3": 3,
+    "4": 4,
+    "5": 5,
+    "6": 6,
+    "7": 7,
+    "8": 8,
+    "9": 9,
+    "0": 0
+};
+
+var setColorKeys = {
+    "!": 1,
+    "@": 2,
+    "#": 3,
+    "$": 4,
+    "%": 5,
+    "^": 6,
+    "&": 7,
+    "*": 8,
+    "(": 9,
+    ")": 0
+};
 
 module.exports = enterCursorOrKnobMode;
 function enterCursorOrKnobMode(delf, viewport) {
@@ -11,12 +35,12 @@ function enterCursorOrKnobMode(delf, viewport) {
                 viewport.dig();
             } else if (key === "f") {
                 viewport.fill(delf.fillValue);
-            } else if (key === "c" || key === "y") {
+            } else if (key === "y") {
                 viewport.copy();
             } else if (key === "x") {
                 viewport.cut();
                 delf.draw();
-            } else if (key === "v" || key === "p") {
+            } else if (key === "p") {
                 viewport.paste();
                 delf.draw();
             } else if (key == "~") {
@@ -28,18 +52,15 @@ function enterCursorOrKnobMode(delf, viewport) {
             } else if (key === "+") {
                 viewport.add();
                 delf.draw();
-            } else if (key === "F") {
-                delf.blur();
-                delf.colorLine.style.visibility = 'visible';
-                // TODO set colorLine delegate to fill cover
-                return enterColorPickerMode(delf.colorPicker, exitColorPickerMode);
-            } else if (key === "D") {
-                delf.blur();
-                delf.colorLine.style.visibility = 'visible';
-                return enterColorPickerMode(delf.colorPicker, exitColorPickerMode);
-            } else if (+key >= 0 && +key <= 9) {
-                delf.inventory.setActiveItem(+key);
-                delf.fillValue = +key;
+            } else if (key === "c") {
+                delf.colorPicker.delegate = delf; // Inventory-based color selection
+                return delf.enterColorPickerMode(function exitColorPicker() {
+                    return mode;
+                });
+            } else if (typeof colorKeys[key] === 'number') {
+                var index = colorKeys[key];
+                delf.inventory.setActiveItem(index);
+                delf.fillValue = index;
             }
 
             // enter - open inspector for commands to perform on the selected region
@@ -71,15 +92,8 @@ function enterCursorOrKnobMode(delf, viewport) {
             // restore context (cursor etc)
         }
 
-        function exitColorPickerMode() {
-            delf.focus();
-            delf.colorLine.style.visibility = 'hidden';
-            return mode;
-        }
-
         return mode;
     }
 
     return cursorOrKnobMode;
 }
-

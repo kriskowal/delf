@@ -7,38 +7,76 @@
         <link rel="tag" href="colorim.html">
         <link rel="tag" href="./inventory.html">
         <link rel="tag" href="./viewport.html">
-        <link rel="tag" href="./cursor-mode.html" as="cursormode">
-        <link rel="tag" href="./knob-mode.html" as="knobmode">
-        <link rel="tag" href="./file-mode.html" as="filemode">
+        <link rel="tag" href="./palette.html">
+        <link rel="tag" href="../../lib/modeline.html">
+        <link rel="tag" href="../../lib/mode.html">
     </head>
     <body>
         <style id="styleSheet">
-            body {}
-            .tile1 {}
-            .tile2 {}
-            .tile3 {}
-            .tile4 {}
-            .tile5 {}
-            .tile6 {}
-            .tile7 {}
-            .tile8 {}
-            .tile9 {}
+            body {} .tile1 {} .tile2 {} .tile3 {} .tile4 {}
+            .tile5 {} .tile6 {} .tile7 {} .tile8 {} .tile9 {}
         </style>
-        <div id="container" class="container">
-            <viewport id="viewport"></viewport>
-            <div class="colorline" id="colorLine">
-                <colorim id="colorPicker"></colorim>
+        <div class="window">
+            <div class="nonModeLine">
+                <div class="document">
+                    <viewport id="viewport"></viewport>
+                    <div class="colorLine" id="colorLine">
+                        <colorim id="colorPicker"></colorim>
+                    </div>
+                    <div class="inventoryLine">
+                        <inventory id="inventory"></inventory>
+                    </div>
+                </div>
+                <div class="inspectorBox">
+                    <div class="inspectorLabel">palette</div>
+                    <palette id="palette"></palette>
+                </div>
             </div>
-            <div class="inventoryLine">
-                <inventory id="inventory"></inventory>
-            </div>
-            <div class="modeline">
-                <cursormode id="cursorMode"></cursormode>
-                <knobmode id="knobMode"></knobmode>
-                <filemode id="fileMode"></filemode>
+            <div class="modeLine">
+                <modeline id="modeLine"></modeline>
             </div>
         </div>
-        <div id="inspector" class="inspector" style="visibility: hidden">
-        </div>
+        <mode id="cursorMode">
+            <sp><strong>cursor:</strong> </sp>
+            <sp><span id="digButton" class="button"><u>d</u>ig</span> </sp>
+            <sp><span id="fillButton" class="button"><u>f</u>ill</span> </sp>
+            <sp><span id="colorButton" class="button"><u>c</u>olor</span> </sp>
+            <sp><span id="originButton" class="button"><u>g</u>o…</span> </sp>
+            <sp><span id="moveButton" class="button"><u>hjkl</u> move</span> </sp>
+            <sp><span id="creepButton" class="button"><i>shift</i> creep</span> </sp>
+            <sp><span id="resizeButton" class="button">res<u>i</u>ze</span> </sp>
+            <sp><span id="creepButton" class="button"><i>shift</i> grow</span> </sp>
+            <sp><span id="selectModeButton" class="button"><u>s</u>elect…</span> </sp>
+            <sp><span id="cutButton" class="button"><u>x</u> cut</span> </sp>
+            <sp><span id="copyButton" class="button"><u>y</u>ank</span> </sp>
+            <sp><span id="pasteButton" class="button"><u>p</u>aste</span> </sp>
+            <sp><span id="toggleButton" class="button">~</span> </sp>
+            <sp><span id="addButton" class="button">+</span> </sp>
+            <sp><span id="subButton" class="button">-</span></sp>
+        </mode>
+        <mode id="knobMode">
+            <sp><strong>knob mode:</strong> </sp>
+            <sp><span class="button"><u>hjkl</u> move</span> </sp>
+            <sp><span class="button"><i>shift</i> creep</span> </sp>
+            <sp><span class="button"><u>o</u>rbit</span> </sp>
+            <sp><span class="button"><u>r</u>otate</span> </sp>
+            <sp><span class="button">res<u>i</u>ze</span> </sp>
+            <sp><span class="button"><i>shift</i> reverse</span> </sp>
+            <sp><span class="button"><u>t</u>ranspose</span> </sp>
+            <sp><span class="button"><u>s</u> or <i>escape</i> back…</span></sp>
+        </mode>
+        <mode id="goMode">
+            <sp><strong>go:</strong> </sp>
+            <sp><span class="button"><u>g</u> origin</span> </sp>
+            <sp><span class="button"><u>p</u>alette</span> </sp>
+        </mode>
+        <mode id="colorMode">
+            <sp><strong>color:</strong> </sp>
+            <sp><span class="button"><u>jk</u> up/down</span> </sp>
+            <sp><span class="button"><u>hl</u> left/right</span> </sp>
+            <sp><span class="button"><u>H</u> less</span> </sp>
+            <sp><span class="button"><u>L</u> more</span> </sp>
+            <sp><span class="button"><i>enter</i> choose</span> </sp>
+        </mode>
     </body>
 </html>

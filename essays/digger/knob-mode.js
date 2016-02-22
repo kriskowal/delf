@@ -59,11 +59,13 @@ function enterKnobMode(delf, viewport, exit) {
     function _exit() {
         delf.isKnobMode = false;
         delf.draw();
+        delf.modeLine.hide(delf.knobMode);
         return exit();
     }
 
     delf.isKnobMode = true;
     delf.draw();
+    delf.modeLine.show(delf.knobMode);
     return knobMode;
 }
 

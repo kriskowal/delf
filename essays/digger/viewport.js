@@ -13,6 +13,7 @@ module.exports = Viewport;
 function Viewport(body, scope) {
     var self = this;
     this.tiles = new FastMap(); // point to tile model
+    this.tileStore = {};
     this.storage = null;
     this.tiles.getDefault = function (point) {
         var tile = new Tile(point);
@@ -28,6 +29,7 @@ function Viewport(body, scope) {
     this.isFocused = false;
     this.isCursorMode = true;
     this.isKnobMode = false;
+
     // TODO replace curbs with a center, adjusted in response to visible region change events
     this.leftCurb = 0;
     this.topCurb = 0;
@@ -87,6 +89,7 @@ Viewport.prototype.hookup = function hookup(id, component, scope) {
 
 Viewport.prototype.hookupThis = function hookupThis(component, scope) {
     var components = scope.components;
+    this.element = components.element;
     this.center = components.center;
     this.origin = components.origin;
     this.cursor = components.cursor;
@@ -94,6 +97,14 @@ Viewport.prototype.hookupThis = function hookupThis(component, scope) {
     this.tileSpace = components.tiles;
     this.tileSpace.tileSize.copyFrom(this.tileSize);
     this.tileSpace.delegate = this;
+};
+
+Viewport.prototype.measure = function measure() {
+    centerPx.x = this.element.clientWidth
+    centerPx.y = this.element.clientHeight;
+    centerPx.scaleThis(.5);
+    this.center.style.top = centerPx.y + "px";
+    this.center.style.left = centerPx.x + "px";
 };
 
 var knobPx = new Region2(new Point2(), new Point2());
@@ -146,12 +157,8 @@ Viewport.prototype.reframe = function reframe() {
 // resize's reusable structure
 var centerPx = new Point2();
 Viewport.prototype.handleResize = function () {
-    centerPx.x = window.innerWidth;
-    centerPx.y = window.innerHeight;
-    centerPx.scaleThis(.5);
-    this.center.style.top = centerPx.y + "px";
-    this.center.style.left = centerPx.x + "px";
 
+    this.animator.requestMeasure();
     this.animator.requestDraw();
 };
 
@@ -165,7 +172,7 @@ Viewport.prototype.drawTile = function drawTile(tile) {
     if (!model) {
         return;
     }
-    tile.actualNode.className = "tile" + (model.value > 0 ? " space" : "") + (model.value > 0 ? " tile" + model.value : "");
+    tile.actualNode.className = "tile" + (model.value > 0 ? " pal" + model.value : "");
 };
 
 Viewport.prototype.moveCursor = function (direction, size) {

@@ -11,6 +11,7 @@ body {
     background-color: #1f1111;
     margin: 0;
     padding: 0;
+    font-family: Lucia Grande;
 }
 
 /* center of page frame of reference, governed by window size */
@@ -69,40 +70,53 @@ body {
     left: 0;
     width: 24px;
     height: 24px;
-    background-color: #221111;
-    outline: dotted black 1px;
 }
 
-.space {
-    background-color: #333344;
-}
+/* Delf */
 
-.inspector {
-    background-color: #334455;
+.window {
     position: absolute;
-    width: 30%;
-    right: 0;
-    height: 100%;
-}
-
-.menu {
-    background-color: #334455;
-    position: absolute;
-    width: 30%;
-    left: 0;
-    height: 100%;
-}
-
-.container {
-    position: absolute;
-    margin: 0;
-    padding: 0;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
-    height: 100%;
-    width: 100%;
+}
+
+.modeLine {
+    position: absolute;
+    height: 40px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.nonModeLine {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 40px;
+}
+
+.document {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 20ex;
+}
+
+.inspectorBox {
+    position: absolute;
+    background-color: #334455;
+    color: #aaa;
+    font-size: 20px;
+    width: 20ex;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    overflow: auto;
+    padding: 0;
 }
 
 .viewport {
@@ -114,13 +128,13 @@ body {
     overflow: hidden;
 }
 
-.colorline {
+.colorLine {
     position: absolute;
     overflow: hidden;
     height: 200px;
     left: 0;
     right: 0;
-    bottom: 80px;
+    bottom: 46px;
     margin: 0;
     padding: 0;
 }
@@ -134,7 +148,7 @@ body {
     height: 40px;
     left: 0;
     right: 0;
-    bottom: 46px;
+    bottom: 4px;
     margin: 0;
     padding: 0;
 }
@@ -159,7 +173,7 @@ body {
     font-weight: bold;
 }
 
-.modeline {
+.modeLine {
     position: absolute;
     overflow: hidden;
     height: 40px;
@@ -199,5 +213,50 @@ body {
     border-radius: 5px;
     padding-left: 5px;
     padding-right: 5px;
+}
+
+/* colorim.html */
+.swatch {
+  box-shadow: 0 0 10px 10px hsla(0, 0%, 20%, 0.5);
+}
+
+.inspectorLabel {
+    margin: 3px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 6px;
+    padding-right: 6px;
+    font-style: italic;
+    font-weight: heavy;
+    text-align: center;
+}
+
+.listEntry {
+    display: flex;
+    flex-direction: row;
+    margin: 3px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 3px;
+    padding-right: 3px;
+    border: solid hsla(0, 0%, 0%, 0) 1px;
+    border-radius: 6px;
+}
+
+.listEntry.activeEntry {
+    border: dashed #abb 1px;
+}
+
+.paletteSwatch {
+    width: 24px;
+    height: 24px;
+    border: solid #abb 2px;
+    border-radius: 4px;
+}
+
+.paletteLabel {
+    flex: 1 0 auto;
+    line-height: 24px;
+    padding-left: 6px;
 }
 

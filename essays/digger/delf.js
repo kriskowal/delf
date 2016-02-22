@@ -1,5 +1,14 @@
 'use strict';
 
+var enterColorPickerMode = require('./color-picker-mode');
+
+DelfView.prototype.directionKeys = {
+    h: 'left',
+    j: 'down',
+    k: 'up',
+    l: 'right'
+};
+
 module.exports = DelfView;
 function DelfView(slot, scope) {
     this.isFileMenuMode = false;
@@ -25,20 +34,29 @@ DelfView.prototype.blur = function blur() {
 DelfView.prototype.hookupThis = function hookupThis(component, scope) {
     var components = scope.components;
     this.viewport = components.viewport;
-    this.viewport.bottomCurb = 80;
+    this.viewport.bottomCurb = 48;
 
     this.cursorMode = components.cursorMode;
     this.knobMode = components.knobMode;
-    this.fileMode = components.fileMode;
+    this.goMode = scope.components.goMode;
+    this.colorMode = scope.components.colorMode;
+
     this.colorPicker = components.colorPicker;
     this.colorLine = components.colorLine;
     this.styleSheet = components.styleSheet.sheet;
-    this.inspector = components.inspector;
+    this.modeLine = components.modeLine;
+
+    this.palette = components.palette;
+    this.palette.delegate = this;
+    this.palette.colorPicker = this.colorPicker;
+    this.palette.styleSheet = this.styleSheet;
+    this.palette.modeLine = this.modeLine;
 
     this.inventory = components.inventory;
+    this.inventory.delegate = this;
 
     this.colorLine.style.visibility = 'hidden';
-    this.colorPicker.delegate = this;
+
 };
 
 Object.defineProperty(DelfView.prototype, 'isCursorMode', {
@@ -60,8 +78,12 @@ Object.defineProperty(DelfView.prototype, 'isKnobMode', {
 });
 
 DelfView.prototype.handleColorChange = function handleColorChange(color) {
-    this.styleSheet.deleteRule(this.fillValue);
-    this.styleSheet.insertRule(".tile" + this.fillValue + " { background-color: " + color.toStyle() + " }", this.fillValue);
+    // TODO: inventory based color selection, editing the palette
+    this.palette.handleColorChange(color);
+};
+
+DelfView.prototype.handleActiveItemChange = function handleActiveItemChange(value) {
+    this.fillValue = value;
 };
 
 DelfView.prototype.handleResize = function handleResize() {
@@ -70,29 +92,21 @@ DelfView.prototype.handleResize = function handleResize() {
 
 DelfView.prototype.draw = function draw() {
 
-    if (this.isCursorMode) {
-        this.cursorMode.scope.components.element.classList.add('shown');
-    } else {
-        this.cursorMode.scope.components.element.classList.remove('shown');
-    }
-    if (this.isKnobMode) {
-        this.knobMode.scope.components.element.classList.add('shown');
-    } else {
-        this.knobMode.scope.components.element.classList.remove('shown');
-    }
-    if (this.isFileMenuMode) {
-        this.fileMode.scope.components.element.classList.add('shown');
-    } else {
-        this.fileMode.scope.components.element.classList.remove('shown');
-    }
-
     this.viewport.draw();
 };
 
-DelfView.prototype.directionKeys = {
-    h: 'left',
-    j: 'down',
-    k: 'up',
-    l: 'right'
-};
+DelfView.prototype.enterColorPickerMode = function enterDelfColorPickerMode(exit) {
+    var delf = this;
 
+    function exitColorPickerMode() {
+        delf.focus();
+        delf.colorLine.style.visibility = 'hidden';
+        delf.modeLine.hide(delf.colorMode);
+        return exit();
+    }
+
+    delf.blur();
+    delf.colorLine.style.visibility = 'visible';
+    delf.modeLine.show(delf.colorMode);
+    return enterColorPickerMode(delf.colorPicker, exitColorPickerMode);
+};

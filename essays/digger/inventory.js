@@ -23,6 +23,7 @@ Inventory.prototype.hookupThis = function hookupThis(scope) {
 
 Inventory.prototype.hookupItem = function hookupItem(item, scope) {
     scope.components.label.value = item.value;
+    scope.components.item.classList.add('pal' + item.value);
 };
 
 Inventory.prototype.setActiveItem = function setActiveItem(value) {
