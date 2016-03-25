@@ -1,0 +1,31 @@
+body {
+    overflow: hidden;
+}
+
+.tile {
+    position: absolute;
+    border-top: dotted 1px black;
+    border-left: dotted 1px black;
+}
+
+.origin {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.tiles {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.tiles1box > .tile {
+    border-color: blue;
+    z-index: 1;
+}
+
+.tiles2box > .tile {
+    border-color: red;
+    z-index: 2;
+}
